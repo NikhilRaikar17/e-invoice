@@ -1,0 +1,8 @@
+*.xml
+/venv
+*.png
+*.jpg
+*.pyc
+/static/js
+/static/vendor
+.idea

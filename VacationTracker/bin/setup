@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ ! -e "VacationTracker.py" ]; then
+  echo "ERROR: Current directory must be the root directory of the VacationTracker application."
+  exit 1
+fi
+
+echo
+echo "ATTENTION: This will delete the old database and virtual environment."
+echo
+read -a ANSWER -p "Proceed? (yes/no) "
+if [ "$ANSWER" != "yes" ]; then
+  echo "Abort"
+  exit 1
+fi
+echo
+
+echo "--- Removing old virtual environment and database..."
+rm -rf venv database.db
+echo
+
+echo "--- Creating new virtual environment..."
+python3 -m venv venv
+echo
+
+echo "--- Activating virtual environment..."
+. venv/bin/activate
+echo
+
+echo "--- Installing required python modules into virtual environment..."
+pip3 install wheel Flask flask_ldap3_login flask_login flask_sqlalchemy
+echo
+
+echo "--- Creating database as defined by the application..."
+python3 - <<< "
+from VacationTracker import db
+db.create_all()
+"
+echo
+
+echo "--- Done."
+echo

@@ -1,0 +1,12 @@
+.bg-primary {
+  background-color: #175496 !important;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #175496;
+  border-color: #175496;
+}
+.btn-xs {
+  // line-height: ensure proper height of button next to extra small input 
+  @include button-size($padding-y, $padding-x, $font-size, $line-height, $border-radius);
+}

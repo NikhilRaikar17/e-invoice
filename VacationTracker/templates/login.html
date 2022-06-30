@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom fonts -->
+    <link href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles -->
+    <link href="{{ url_for('static',filename='css/login.css') }}" rel="stylesheet">
+
+  </head>
+
+  <body class="login">
+  
+    <div class="modal-dialog modal-login">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="avatar">
+            <img src="{{ url_for('static',filename='images/avatar_alpha.png') }}" alt="Avatar">
+          </div>				
+          <h4 class="modal-title">Login</h4>	
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              <input type="text" class="form-control" name="username" placeholder="Username" required="required">		
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="Password" required="required">	
+            </div>        
+            <div class="form-group">
+              <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block login-btn">
+                <i class="fa fa-sign-in-alt"></i> Login
+              </button>
+            </div>
+          </form>
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="modal-footer">
+              <div class="container">
+              {% for message in messages %}
+                <div class="row">
+                  <div class="col">
+                    <b>{{ message }}</b>
+                  </div>
+                </div>
+              {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="{{ url_for('static',filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+  </body>
+
+</html>
