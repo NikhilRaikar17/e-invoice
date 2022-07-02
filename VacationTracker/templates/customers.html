@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">{% block title %}Create New Customer{% endblock %}</li>
+{% endblock %}
+
+{% block content %}
+  <h1>Manage Customers</h1>
+  <hr/>
+
+  <button class="btn btn-sm btn-primary" data-toggle="modal" data-title="Add" data-target="#add-customer" type="button"> 
+    <i class="fa fa-plus-circle"></i>  Add Customer
+  </button>
+
+  <div class="table-responsive mt-2">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="vacation-table-body">
+      {% for customer in customers %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{customer.phone_number}} </td>
+          <td></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="modal fade" id="add-customer" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="edit-vacation-form" action="{{url_for('add_customer')}}" method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="Heading">Add customer</h4>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+              <label for="customer-name"><b>Name</b></label>
+              <input class="form-control" id="customer-name" name="customer-name" value="" required></input>
+            </div>
+            <div class="form-group">
+              <label for="customer-email"><b>Email</b></label>
+              <input class="form-control" id="customer-email" name="customer-email" value="" required></input>
+            </div>
+            <div class="form-group">
+              <label for="customer-address"><b>Address</b></label>
+              <textarea class="form-control" id="customer-address" name="customer-address" value="" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="customer-phone"><b>Phone Number</b></label>
+              <input class="form-control" id="customer-phone" name="customer-phone" value="" required></input>
+            </div>
+          
+            
+          </div>
+          <div class="modal-footer ">
+            <button class="btn btn-success btn-lg" style="width: 100%;">
+              <i class="fa fa-save"></i> Add
+            </button>
+          </div>
+        </div>
+      </form>        
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  </script>  
+{% endblock %}

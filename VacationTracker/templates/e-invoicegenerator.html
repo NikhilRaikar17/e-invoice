@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item active">{% block title %}{% if scope == 'my' %}My{% else %}All{% endif %} Vacation Dates{% endblock %}</li>
+  <li class="breadcrumb-item active">{% block title %}Create New Invoice{% endblock %}</li>
 {% endblock %}
 
 {% block content %}
@@ -11,251 +11,51 @@
   <!-- Vacation dates table upper toolbar -->
   <div class="btn-toolbar mb-3">
     
-  </div>
-  
-  <!-- Vacation dates table -->
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><input type="checkbox" class="check" id="checkall"/></th>
-          {% if scope == 'all' %}
-          <th>Email</th>
-          {% endif %}
-          <th>From</th>
-          <th>To</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody id="vacation-table-body">
-      {% for vacation in vacations %}
-        <tr>
-          <td><input type="checkbox" class="vacation-checkbox check" id="{{ vacation.id }}"/></td>
-          {% if scope == 'all' %}
-          <td>{{ vacation.Mail }}</td>
-          {% endif %}
-          <td>{{ vacation.StartDate.strftime('%B %d, %Y').replace(" 0", " ") }}</td>
-          <td>{{ vacation.EndDate.strftime('%B %d, %Y').replace(" 0", " ") }}</td>
-          <td>
-            <button class="open-edit-dialog btn btn-primary btn-sm" data-id="{{ vacation.id }}" data-email="{{ vacation.Mail }}" data-start-date="{{ vacation.StartDate }}" data-end-date="{{ vacation.EndDate }}" data-title="Edit" data-toggle="modal" data-target="#edit-vacation">
-              <li class="fa fa-edit"></li>
-            </button>
-          </td>
-          <td>
-            <button class="open-delete-dialog btn btn-danger btn-sm" data-id="{{ vacation.id }}" data-title="Delete" data-toggle="modal" data-target="#delete-vacation">
-              <li class="fa fa-trash-alt"></li>
-            </button>
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Name</label>
+        <input type="text" class="form-control">
+        <small id="emailHelp" class="form-text text-muted">Aleem Khan</small>
+      </div>
+
+      <div class="form-group ms-5">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control">
+        <small id="emailHelp" class="form-text text-muted">example@test.com</small>
+ 
+      </div>
+      <div class="form-group ms-4">
+        <label for="exampleInputEmail1">Address</label>
+        <input type="text" class="form-control">
+        <small id="emailHelp" class="form-text text-muted">76185,KA Germany</small>
+ 
+      </div>
+      <div class="form-group ms-4">
+        <label for="exampleInputEmail1">Phone Number</label>
+        <input type="text" class="form-control">
+        <small id="emailHelp" class="form-text text-muted">+4958659565659</small>
+ 
+      </div>
+      <div class="form-group ms-4">
+        <label for="exampleInputEmail1">Company Name</label>
+        <input type="text" class="form-control">
+        <small id="emailHelp" class="form-text text-muted">Example GmbH</small>
+ 
+      </div>
+    
   </div>
 
-  <!-- Modal add vacation date dialog -->
-  <div class="modal fade" id="add-vacation" tabindex="-1">
-    <div class="modal-dialog">
-      <form id="add-vacation-form" action="{{ url_for('vacation_add', scope = scope) }}" method="POST">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Heading">Add Vacation Date</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {% if scope == 'all' %}
-            <div class="form-group">
-              <label for="add-email"><b>Email</b></label>
-              <input class="form-control" id="add-email" name="add-email" value="{{ asasd }}" required></input>
-            </div>
-            {% endif %}
-            <div class="form-group">
-              <label for="add-start-date"><b>From</b></label>
-              <input class="form-control" id="add-start-date" name="add-start-date" value="" placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" data-date-autoclose="true" data-date-calendar-weeks="true" required></input>
-            </div>
-            <div class="form-group">
-              <label for="add-end-date"><b>To</b></label>
-              <input class="form-control" id="add-end-date" name="add-end-date" value="" placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd" data-date-today-highlight="true" data-date-autoclose="true" data-date-calendar-weeks="true" required></input>
-            </div>
-          </div>
-          <div class="modal-footer ">
-            <button class="btn btn-success btn-lg" data-target="#errorModal" style="width: 100%;">
-              <i class="fa fa-save"></i> Add
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+  
+  <div class="d-grid gap-2 d-md-block"">
+      <button class="btn btn-success"> Add Products </button>
+      <button class="btn btn-danger"> Remove Products </button>
+      <button class="btn btn-info"> Select Customer </button>
   </div>
-    
-  <!-- Modal edit vacation date dialog -->
-  <div class="modal fade" id="edit-vacation" tabindex="-1">
-    <div class="modal-dialog">
-      <form id="edit-vacation-form" action="{{ url_for('vacation_update', scope = scope) }}" method="POST">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Heading">Edit Vacation Date</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="edit-vacation-id" name="edit-vacation-id" value=""></input>
-            {% if scope == 'all' %}
-            <div class="form-group">
-              <label for="edit-email"><b>Email</b></label>
-              <input class="form-control" id="edit-email" name="edit-email" value="" required></input>
-            </div>
-            {% endif %}
-            <div class="form-group">
-              <label for="edit-start-date"><b>From</b></label>
-              <input class="form-control" id="edit-start-date" name="edit-start-date" value="" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-date-calendar-weeks="true" required></input>
-            </div>
-            <div class="form-group">
-              <label for="edit-end-date"><b>To</b></label>
-              <input class="form-control" id="edit-end-date" name="edit-end-date" value="" data-date-format="yyyy-mm-dd" data-date-autoclose="true" data-date-calendar-weeks="true" required></input>
-            </div>
-          </div>
-          <div class="modal-footer ">
-            <button class="btn btn-success btn-lg" style="width: 100%;">
-              <i class="fa fa-save"></i> Update
-            </button>
-          </div>
-        </div>
-      </form>        
-    </div>
-  </div>
-    
-  <!-- Modal delete vacation date dialog -->
-  <div class="modal fade" id="delete-vacation" tabindex="-1">
-    <div class="modal-dialog">
-      <form id="delete-vacation-form" action="{{ url_for('vacation_delete', scope = scope) }}" method="POST">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Heading">Delete Vacation Date</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="delete-vacation-id" name="delete-vacation-id" value=""></input>
-            <div class="alert alert-danger">
-              <i class="fa fa-exclamation-triangle"></i> &nbsp;Are you sure you want to delete this vacation date?
-            </div>
-          </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              <i class="fa fa-window-close"></i> Cancel
-            </button>
-            <button class="btn btn-danger">
-              <i class="fa fa-save"></i> Delete
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-    
-  <!-- Modal delete selected vacation dates dialog -->
-  <div class="modal fade" id="delete-vacations" tabindex="-1">
-    <div class="modal-dialog">
-      <form id="delete-vacations-form" action="{{ url_for('vacations_delete', scope = scope) }}" method="POST">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="Heading">Delete Selected Vacation Dates</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="delete-vacation-ids" name="delete-vacation-ids" value=""></input>
-            <div class="alert alert-danger">
-              <i class="fa fa-exclamation-triangle"></i> &nbsp;Are you sure you want to delete the selected vacation dates?
-            </div>
-          </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              <i class="fa fa-window-close"></i> Cancel
-            </button>
-            <button class="btn btn-danger">
-              <i class="fa fa-save"></i> Delete
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+
+
   
 {% endblock %}
 
 {% block scripts %}
   <script>
-    // execute when the DOM becomes ready
-    $(function() {
-      // Implement filter for vacation dates table.
-      $("#vacation-table-filter").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#vacation-table-body tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-      $("#vacation-table-filter").keyup();
-      
-      // Check All Vacations action of the vacation dates table.
-      // Does not check hidden entries.
-      $("#checkall").click(function() {
-        var checked = $(this).prop('checked');
-        $(".check").each(function() {
-          if ($(this).is(":visible")) {
-            $(this).prop('checked', checked);
-          }
-        });
-      });
-
-      // Open and deliver arguments to the modal vacation date edit dialog
-      // on clicking the 'edit' buttons in the vacation dates table.
-      $(document).on("click", ".open-edit-dialog", function() {
-        $(".modal-body #edit-email").val($(this).data('email'));
-        $(".modal-body #edit-start-date").val($(this).data('start-date')).datepicker('update');
-        $(".modal-body #edit-end-date").val($(this).data('end-date')).datepicker('update');
-        $(".modal-body #edit-vacation-id").val($(this).data('id'));
-      });
-      
-      // Open and deliver arguments to the modal vacation date delete dialog
-      // on clicking the 'delete' buttons in the vacation dates table.
-      $(document).on("click", ".open-delete-dialog", function() {
-        $(".modal-body #delete-vacation-id").val($(this).data('id'));
-      });
-      
-      // Open and deliver arguments to the modal selected vacation dates delete
-      // dialog on clicking the 'delete' buttons in the vacation date table 
-      // upper and lower toolbars.
-      $(document).on("click", ".open-selection-delete-dialog ", function() {
-        var $ids=$('.vacation-checkbox:checked').map(function() {return this.id;}).get().join(',');
-        $(".modal-body #delete-vacation-ids").val($ids);
-      });
-
-      // Enable bootstrap-datepicker widget for some input elements. Add 
-      // handlers for date change to prevent the end date to be before
-      // the start date.
-      $('#add-start-date').datepicker().on('changeDate show', function(selected) {
-        var startDate = new Date(selected.date.valueOf());
-        $('#add-end-date').datepicker('setStartDate', startDate);
-      });
-      $('#add-end-date').datepicker().on('changeDate show', function(selected) {
-        var endDate = new Date(selected.date.valueOf());
-        $('#add-start-date').datepicker('setEndDate', endDate);
-      });
-      $('#edit-start-date').datepicker().on('changeDate show', function(selected) {
-        var startDate = new Date(selected.date.valueOf());
-        $('#edit-end-date').datepicker('setStartDate', startDate);
-      });
-      $('#edit-end-date').datepicker().on('changeDate show', function(selected) {
-        var endDate = new Date(selected.date.valueOf());
-        $('#edit-start-date').datepicker('setEndDate', endDate);
-      });
-    });
   </script>  
 {% endblock %}
