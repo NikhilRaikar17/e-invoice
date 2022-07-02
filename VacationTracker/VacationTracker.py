@@ -222,10 +222,23 @@ def add_product():
         flash("Item could not be added", 'danger')
     return redirect(url_for('manage_invoice_items'))
 
+@app.route('/get_customer_details', methods=['GET'])
+@login_required
+def get_customer_details():
+    customer_id = request.args.get('customer_id')
+    customer = Customers.query.filter_by(id=int(customer_id)).first()
+    if not customer:
+        return {"ERROR":"FAILED"}
+
+    return {"name": customer.name,
+            "email": customer.email,
+            "address": customer.address,
+            "phone_number": customer.phone_number}
+
 ##
 ## MAIN
 ##
 
 # Run the application.
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
