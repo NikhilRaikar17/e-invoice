@@ -87,7 +87,13 @@ class Invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     name = db.Column(db.String(100))
     customer_id = db.Column(db.Integer,db.ForeignKey("customers.id"), nullable=False)
+
+class InvoiceMaps(db.Model):
+    __tablename__ = 'invoicemaps'
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer,db.ForeignKey("customers.id"), nullable=False)
     product_id = db.Column(db.Integer,db.ForeignKey("products.id"), nullable=False)
+
 
     
 ##
@@ -161,19 +167,12 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# Show the vacation dates of the current user.
-@app.route('/vacation')
-@login_required
-def vacation():
-    vacations = ''
-    return render_template("vacation.html", vacations = vacations)
-
 
 @app.route('/generate_invoice')
 @login_required
 def generate_invoice():
-    vacations = ''
-    return render_template("e-invoicegenerator.html", vacations = vacations, scope = "my")
+    customers = Customers.query.all()
+    return render_template("e-invoicegenerator.html",customers = customers)
 
 @app.route('/manage_customers', methods=['GET'])
 @login_required

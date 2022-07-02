@@ -48,12 +48,26 @@
             
             <div class="form-group">
               <label for="item-name"><b>Product Name</b></label>
-              <input class="form-control" id="item-name" name="item-name" value="" required></input>
+              <input type="text" class="form-control" id="item-name" name="item-name" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: Screwdriver </small>
             </div>
+            
+            <div class="form-group">
+                <label for="">Currency</label>
+                <select class="form-control" name="currency" id="currency">
+                    <option value="1">$</option>
+                    <option value="2">€</option>
+                </select>
+            </div>
+
             <div class="form-group">
               <label for="item-price"><b>Price</b></label>
-              <input class="form-control" id="item-price" name="item-price" value="" required></input>
+              <input type="text" class="form-control" id="item-price" name="item-price" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: 49.99$ </small>
             </div>
+
+            
+
           </div>
           <div class="modal-footer ">
             <button class="btn btn-success btn-lg" style="width: 100%;">

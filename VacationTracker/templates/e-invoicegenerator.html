@@ -8,47 +8,119 @@
   <h1>Generate E-invoice</h1>
   <hr/>
 
-  <!-- Vacation dates table upper toolbar -->
-  <div class="btn-toolbar mb-3">
+  <div class="row">
+    
+    <div class="col-md-2">
+      <button class="btn btn-info" data-toggle="modal" data-title="Add" data-target="#select-customer"> Select Customer </button>
+    </div>
+    
+    <div class="col-md-2 ml-0">
+      <button class="btn btn-danger" id="clear_customer_data" name="clear_customer_data" style="display:none"> Clear Customer </button>
+    </div>
+  </div>
+  
+
+  <div class="btn-toolbar mt-3 mb-5">
     
       <div class="form-group">
         <label for="exampleInputEmail1">Name</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" disabled>
         <small id="emailHelp" class="form-text text-muted">Aleem Khan</small>
       </div>
 
-      <div class="form-group ms-5">
+      <div class="form-group ms-4">
         <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control">
+        <input type="email" class="form-control" disabled>
         <small id="emailHelp" class="form-text text-muted">example@test.com</small>
  
       </div>
+
       <div class="form-group ms-4">
         <label for="exampleInputEmail1">Address</label>
-        <input type="text" class="form-control">
+        <textarea type="text" class="form-control" disabled> </textarea>
         <small id="emailHelp" class="form-text text-muted">76185,KA Germany</small>
- 
       </div>
+
       <div class="form-group ms-4">
         <label for="exampleInputEmail1">Phone Number</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" disabled>
         <small id="emailHelp" class="form-text text-muted">+4958659565659</small>
- 
       </div>
+
       <div class="form-group ms-4">
         <label for="exampleInputEmail1">Company Name</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" disabled>
         <small id="emailHelp" class="form-text text-muted">Example GmbH</small>
- 
       </div>
-    
+
   </div>
 
+  <div class="btn-toolbar" >
+    <div class="form-group">
+      <label for="exampleInputEmail1">Your Address</label>
+      <textarea type="text" class="form-control" disabled> </textarea>
+    </div>
+    
+    <div class="form-group ms-4">
+      <label for="exampleInputEmail1">Date</label>
+      <input class="form-control" type="date" id="start-date" name="start-date"  required></input>
+    </div>
+    
+    <div class="form-check form-switch pt-4 ms-4">
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Send invoice as Email</label>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Products</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody id="vacation-table-body">
+      </tbody>
+    </table>
+  </div>
   
   <div class="d-grid gap-2 d-md-block"">
-      <button class="btn btn-success"> Add Products </button>
-      <button class="btn btn-danger"> Remove Products </button>
-      <button class="btn btn-info"> Select Customer </button>
+      <button class="btn btn-success" disabled> Add Products </button>
+      <button class="btn btn-danger" disabled> Remove Products </button>
+  </div>
+
+  <div class="modal fade" id="select-customer" tabindex="-1">
+    <div class="modal-dialog">
+      
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="Heading">Generate Invoice</h4>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="customer-name"><b>Customer Name</b></label>
+              <select name="select_customers" id="select_customers" class="form-control">
+                <option value="-1">---</option>
+                {% for customer in customers %}
+                    <option value="{{customer.id}}"> {{ customer.name }} </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer ">
+            <button class="btn btn-success btn-lg" style="width: 100%;" onclick="fill_invoice_form();">
+              Select
+            </button>
+          </div>
+          
+        </div>       
+    </div>
   </div>
 
 
@@ -57,5 +129,16 @@
 
 {% block scripts %}
   <script>
+
+    function fill_invoice_form(){
+      var customer_data = document.getElementById("clear_customer_data")
+      var select_customers = document.getElementById("select_customers")
+      var selected_value = select_customers.options[select_customers.selectedIndex].value;
+      if (selected_value != '-1'){
+        customer_data.style.display = "block";
+      }
+    }
+
+
   </script>  
 {% endblock %}
