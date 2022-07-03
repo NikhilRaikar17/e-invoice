@@ -24,7 +24,7 @@
     
       <div class="form-group">
         <label for="exampleInputEmail1">Name</label>
-        <input type="text" class="form-control" id="name" disabled>
+        <input type="text" class="form-control cust_name" id="customers-name" disabled>
         <small id="emailHelp" class="form-text text-muted">Aleem Khan</small>
       </div>
 
@@ -86,8 +86,8 @@
   </div>
   
   <div class="d-grid gap-2 d-md-block"">
-      <button class="btn btn-success" disabled> Add Products </button>
-      <button class="btn btn-danger" disabled> Remove Products </button>
+      <button class="btn btn-success" id="add_products" data-toggle="modal" data-title="Add" data-target="#add_products_invoice" disabled> Add Products </button>
+      <button class="btn btn-danger" id="remove_products" disabled> Remove Products </button>
   </div>
 
   <div class="modal fade" id="select-customer" tabindex="-1">
@@ -122,24 +122,60 @@
         </div>       
     </div>
   </div>
+ 
+ 
+  <div class="modal fade" id="add_products_invoice" tabindex="-1">
+    <div class="modal-dialog">
+      
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="Heading">All Products</h4>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="customer-name"><b>Products</b></label>
+              <select class="selectpicker" multiple >
+                {% for product in products %}
+                    <option value="{{product.id}}"> {{ product.name }} </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer ">
+            <button class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;">
+              Select
+            </button>
+          </div>
+          
+        </div>       
+    </div>
+  </div>
 
 
-  
+
 {% endblock %}
 
 {% block scripts %}
   <script>
-      var customer_data = document.getElementById("clear_customer_data")
-      var name = document.getElementById("name")
-      var address = document.getElementById("address")
-      var email = document.getElementById("email")
-      var phone_number = document.getElementById("phone_number")
-      var your_address = document.getElementById("your_address")
-      var clear_customer_data = document.getElementById("clear_customer_data")
+      var customer_data = document.getElementById("clear_customer_data");
+      var cust_name = document.getElementById("customers-name");
+      var address = document.getElementById("address");
+      var email = document.getElementById("email");
+      var phone_number = document.getElementById("phone_number");
+      var your_address = document.getElementById("your_address");
+      var clear_customer_data = document.getElementById("clear_customer_data");
+      var select_customers = document.getElementById("select_customers");
+      var add_products = document.getElementById("add_products");
+      var remove_products = document.getElementById("remove_products");
 
       function fill_invoice_form(){
+        // Fills the invoice form with customers data
 
-        var select_customers = document.getElementById("select_customers")
         var selected_value = select_customers.options[select_customers.selectedIndex].value;
         if (selected_value != '-1'){
           customer_data.style.display = "block";
@@ -151,8 +187,10 @@
             dataType: "json",
             success: function(result){
               if (!result["ERROR"]){
-                name.disabled = !name.disabled;
-                name.value = result["name"]
+                console.log(name[0]);
+                console.log(address);
+                cust_name.disabled = !cust_name.disabled;
+                cust_name.value = result["name"]
                 address.disabled = !address.disabled;
                 address.value = result["address"]
                 email.disabled = !email.disabled;
@@ -160,13 +198,18 @@
                 phone_number.disabled = !phone_number.disabled;
                 phone_number.value = result["phone_number"]
                 your_address.disabled = !your_address.disabled;
+                add_products.disabled = !add_products.disabled;
+                remove_products.disabled = !remove_products.disabled;
+
               } else{
-                name.disabled = true;
+                cust_name.disabled = true;
                 address.disabled = true;
                 email.disabled = true;
                 phone_number.disabled = true;
                 your_address.disabled = true;
-
+                select_customers.disabled = false;
+                add_products.disabled = true;
+                remove_products.disabled = true;
               }
             }
         });
@@ -174,17 +217,20 @@
       }
 
       function clear_customer_details(){
-        name.disabled = true;
-        name.value = "";
+        // clears the form pre-filled/not pre-filled with customers data.
+        cust_name.disabled = true;
+        cust_name.value = "";
         address.disabled = true;
         address.value = "";
         email.disabled = true;
         email.value = "";
         phone_number.disabled = true;
-        phone_number.value = true;
+        phone_number.value = "";
         your_address.disabled = true;
         your_address.value = "";
         clear_customer_data.style.display = "none";
+        add_products.disabled = true;
+        remove_products.disabled = true;
       }
 
 

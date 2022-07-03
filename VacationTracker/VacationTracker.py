@@ -138,7 +138,8 @@ def save_user(dn, username, data, memberships):
 # Deliver the start page of the application.
 @app.route('/')
 def index():
-    return redirect(url_for('vacation', scope = 'my'))
+    return render_template("vacation.html")
+
 
 # Deliver the application icon.
 @app.route('/favicon.ico')
@@ -172,7 +173,8 @@ def logout():
 @login_required
 def generate_invoice():
     customers = Customers.query.all()
-    return render_template("e-invoicegenerator.html",customers = customers)
+    products = Products.query.all()
+    return render_template("e-invoicegenerator.html",customers = customers, products = products)
 
 @app.route('/manage_customers', methods=['GET'])
 @login_required
@@ -230,10 +232,12 @@ def get_customer_details():
     if not customer:
         return {"ERROR":"FAILED"}
 
-    return {"name": customer.name,
+    return {
+            "name": customer.name,
             "email": customer.email,
             "address": customer.address,
-            "phone_number": customer.phone_number}
+            "phone_number": customer.phone_number
+            }
 
 ##
 ## MAIN
@@ -241,4 +245,4 @@ def get_customer_details():
 
 # Run the application.
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
