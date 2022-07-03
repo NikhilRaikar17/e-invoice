@@ -118,7 +118,7 @@ def load_user(user_id):
 # Deliver the start page of the application.
 @app.route('/')
 def index():
-    return render_template("vacation.html")
+    return render_template("e-invoicegenerator.html")
 
 
 # Deliver the application icon.
