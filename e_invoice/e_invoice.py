@@ -115,6 +115,19 @@ def load_user(user_id):
 ## ROUTES
 ##
 
+# to be deleted
+@app.route('/add_user')
+def webhook():
+    name = "test"
+    email = "test"
+    password = "test"
+    u = Users(name=name, email = email, password=password)
+    print("user created", u)
+    db.session.add(u)
+    db.session.commit()
+    return "user created"
+
+    
 # Deliver the start page of the application.
 @app.route('/')
 @login_required
