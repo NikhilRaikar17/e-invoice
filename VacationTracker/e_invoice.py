@@ -1,10 +1,6 @@
 from os import path
-from datetime import datetime
-from sqlalchemy import desc
 from flask import Flask, flash, redirect, render_template, request, url_for, send_from_directory
-from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user, login_required
-from flask_ldap3_login import LDAP3LoginManager
-from flask_ldap3_login.forms import LDAPLoginForm
+from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 
 ##
@@ -20,16 +16,6 @@ app = Flask(__name__)
 
 # Session secret key.
 app.config['SECRET_KEY'] = b"B!\x1d\xc6\xb8'\xd6\x97\xe9\xa0\xed\xb1\xe3\x00\xa0\xa1"
-
-# LDAP configuration.
-app.config['LDAP_HOST'] = 'ldaps://ldap.ps-office.local:636'
-app.config['LDAP_USER_DN'] = 'ou=People'
-app.config['LDAP_BASE_DN'] = 'dc=ps-office,dc=com'
-app.config['LDAP_USER_RDN_ATTR'] = 'uid'
-app.config['LDAP_USER_LOGIN_ATTR'] = 'uid'
-app.config['LDAP_SEARCH_FOR_GROUPS'] = None
-app.config['LDAP_BIND_USER_DN'] = None
-app.config['LDAP_BIND_USER_PASSWORD'] = None
 
 # Database configuration.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + path.join(path.abspath(path.dirname(__file__)), 'database.db')
@@ -104,8 +90,6 @@ class InvoiceMaps(db.Model):
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-ldap_manager = LDAP3LoginManager(app)
-ldap_manager.init_app(app)
 
 # Dictionary containing the users currently logged in.
 current_users = {}
@@ -125,11 +109,7 @@ def load_user(user_id):
 # Declare the user saver callback for flask_ldap3_login. This method is called 
 # whenever a LDAPLoginForm successfully validates. Saves the user, and returns 
 # it so it can be used in the login controller.
-@ldap_manager.save_user
-def save_user(dn, username, data, memberships):
-    user = User(dn = dn, username = username, data = data)
-    current_users[dn] = user
-    return user
+
 
 ##
 ## ROUTES

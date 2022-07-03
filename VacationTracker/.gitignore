@@ -6,4 +6,4 @@
 /static/js
 /static/vendor
 .idea
-*.db
+/*.db

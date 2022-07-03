@@ -73,21 +73,24 @@
   </div>
 
   <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
+    <table class="table table-striped" id="products_table">
+      <thead id="products_table_header">
         <tr>
           <th>Products</th>
           <th>Price</th>
         </tr>
       </thead>
-      <tbody id="vacation-table-body">
+      <tbody id="products-table-body">
       </tbody>
     </table>
+  </div>
+
+  <div class="col-md-8" id="price_total" style="display: none">
+    <span style="float: right;" id="price_total_span"></span>
   </div>
   
   <div class="d-grid gap-2 d-md-block"">
       <button class="btn btn-success" id="add_products" data-toggle="modal" data-title="Add" data-target="#add_products_invoice" disabled> Add Products </button>
-      <button class="btn btn-danger" id="remove_products" disabled> Remove Products </button>
   </div>
 
   <div class="modal fade" id="select-customer" tabindex="-1">
@@ -138,16 +141,16 @@
 
             <div class="form-group">
               <label for="customer-name"><b>Products</b></label>
-              <select class="selectpicker" multiple >
+              <select class="selectpicker" multiple id="select_products" >
                 {% for product in products %}
-                    <option value="{{product.id}}"> {{ product.name }} </option>
+                    <option value="{{product.id}}" product_price="{{product.price}}"> {{ product.name }} </option>
                 {% endfor %}
               </select>
             </div>
           </div>
 
           <div class="modal-footer ">
-            <button class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;">
+            <button class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;" onclick="update_table_with_products();">
               Select
             </button>
           </div>
@@ -171,7 +174,12 @@
       var clear_customer_data = document.getElementById("clear_customer_data");
       var select_customers = document.getElementById("select_customers");
       var add_products = document.getElementById("add_products");
-      var remove_products = document.getElementById("remove_products");
+      var select_products = document.getElementById("select_products");
+      var table = document.getElementById("products_table");
+      var table_header = document.getElementById("products_table_header");
+      var table_body = document.getElementById("products-table-body");
+      var price_total = document.getElementById("price_total");
+      var price_total_span = document.getElementById("price_total_span");
 
       function fill_invoice_form(){
         // Fills the invoice form with customers data
@@ -187,8 +195,6 @@
             dataType: "json",
             success: function(result){
               if (!result["ERROR"]){
-                console.log(name[0]);
-                console.log(address);
                 cust_name.disabled = !cust_name.disabled;
                 cust_name.value = result["name"]
                 address.disabled = !address.disabled;
@@ -199,7 +205,6 @@
                 phone_number.value = result["phone_number"]
                 your_address.disabled = !your_address.disabled;
                 add_products.disabled = !add_products.disabled;
-                remove_products.disabled = !remove_products.disabled;
 
               } else{
                 cust_name.disabled = true;
@@ -209,10 +214,9 @@
                 your_address.disabled = true;
                 select_customers.disabled = false;
                 add_products.disabled = true;
-                remove_products.disabled = true;
               }
             }
-        });
+          });
         }
       }
 
@@ -230,7 +234,34 @@
         your_address.value = "";
         clear_customer_data.style.display = "none";
         add_products.disabled = true;
-        remove_products.disabled = true;
+        table_body.innerHTML = "";
+        price_total.style.display = 'none';
+        price_total_span.innerHTML = ""
+    
+      }
+
+      function update_table_with_products(){
+        var selected = [];
+        for (var option of select_products.options) {
+          if (option.selected) {
+            selected.push([option.text,option.getAttribute("product_price")]);
+          }
+        }
+        table_body.innerHTML = ""; 
+        var total = 0
+        for (j = 0; j < selected.length; j++) {
+          var tbodyTr = document.createElement('tr');
+          total = total + parseInt(selected[j][1])
+          for (k = 0; k < selected[j].length; k++) {
+            var tbodyTd = document.createElement('td');
+            tbodyTd.innerHTML = selected[j][k];
+            tbodyTr.appendChild(tbodyTd);
+          }
+          table_body.appendChild(tbodyTr);
+        }
+        table.appendChild(table_body);
+        price_total.style.display = 'block';
+        price_total_span.innerHTML = "Total Amount:" + total
       }
 
 

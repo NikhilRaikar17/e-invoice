@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -e "VacationTracker.py" ]; then
+if [ ! -e "e_invoice.py" ]; then
   echo "ERROR: Current directory must be the root directory of the VacationTracker application."
   exit 1
 fi

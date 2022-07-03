@@ -1,5 +1,5 @@
 which run 2>&1 >/dev/null || export PATH="$PWD/bin:$PATH"
 export FLASK_ENV=development
-export FLASK_APP=VacationTracker.py
+export FLASK_APP=e_invoice.py
 . venv/scripts/activate
 alias run="flask run"
