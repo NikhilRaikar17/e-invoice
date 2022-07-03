@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = b"B!\x1d\xc6\xb8'\xd6\x97\xe9\xa0\xed\xb1\xe3\x00\xa0\xa1"
 
 # Database configuration.
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + path.join(path.abspath(path.dirname(__file__)), 'database.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 ##
@@ -117,6 +117,7 @@ def load_user(user_id):
 
 # Deliver the start page of the application.
 @app.route('/')
+@login_required
 def index():
     return render_template("e-invoicegenerator.html")
 
