@@ -95,6 +95,13 @@ def generate_invoice():
     products = Products.query.all()
     return render_template("e-invoicegenerator.html",customers = customers, products = products)
 
+@app.route('/generate_invoice_1')
+@login_required
+def generate_invoice_1():
+    customers = Customers.query.all()
+    products = Products.query.all()
+    return render_template("e-invoicegenerator_1.html",customers = customers, products = products)
+
 @app.route('/manage_customers', methods=['GET'])
 @login_required
 def manage_customers():
