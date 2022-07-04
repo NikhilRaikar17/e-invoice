@@ -2,6 +2,7 @@ from os import path
 from flask import Flask, flash, redirect, render_template, request, url_for, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
+from models.db_models import *
 
 ##
 ## THE APP
@@ -26,62 +27,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 ##
 
 # Initialize database manager.
-db = SQLAlchemy(app)
-
-# Declare vacation database table.
-class Vacation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    Mail = db.Column(db.Text)
-    StartDate = db.Column(db.Date)
-    EndDate = db.Column(db.Date)
-
-class Users(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):   
-        return True           
-
-    def is_anonymous(self):
-        return False          
-
-    def get_id(self):         
-        return str(self.id)
-
-class Customers(db.Model):
-    __tablename__ = 'customers'
-
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    name = db.Column(db.String(1000), nullable=False) 
-    email = db.Column(db.String(100), unique=True)
-    address = db.Column(db.String(100), nullable=False)
-    phone_number = db.Column(db.String(100), nullable=False)
-
-class Products(db.Model):
-    __tablename__ = 'products'
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    name = db.Column(db.String(100), unique=True)
-    price = db.Column(db.Float(100), nullable=False)
-class Invoice(db.Model):
-    __tablename__ = 'invoices'
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
-    name = db.Column(db.String(100))
-    customer_id = db.Column(db.Integer,db.ForeignKey("customers.id"), nullable=False)
-
-class InvoiceMaps(db.Model):
-    __tablename__ = 'invoicemaps'
-    id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer,db.ForeignKey("customers.id"), nullable=False)
-    product_id = db.Column(db.Integer,db.ForeignKey("products.id"), nullable=False)
-
-
-    
+db.init_app(app)
+ 
 ##
 ## LOGIN SETUP
 ##
@@ -94,11 +41,6 @@ login_manager.login_view = 'login'
 # Dictionary containing the users currently logged in.
 current_users = {}
 
-# Set containing the admin users.
-admin_users = {'danilo', 'holger', 'steffi', 'pvtest'}
-
-# Declare a flask_login compatible user data holder.
-
 
 # Declare the user loader callback for flask_login. Returns the user data for 
 # the given user_id. Returns None if no user with this user_id is logged in.
@@ -106,26 +48,9 @@ admin_users = {'danilo', 'holger', 'steffi', 'pvtest'}
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-# Declare the user saver callback for flask_ldap3_login. This method is called 
-# whenever a LDAPLoginForm successfully validates. Saves the user, and returns 
-# it so it can be used in the login controller.
-
-
 ##
 ## ROUTES
 ##
-
-# to be deleted
-@app.route('/add_user')
-def webhook():
-    name = "test"
-    email = "test"
-    password = "test"
-    u = Users(name=name, email = email, password=password)
-    print("user created", u)
-    db.session.add(u)
-    db.session.commit()
-    return "user created"
 
     
 # Deliver the start page of the application.
