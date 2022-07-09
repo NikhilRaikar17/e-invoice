@@ -134,6 +134,11 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   width: 90px !important;
   background-color: #ffffff;
   min-height: calc(100vh - 56px);
+  padding: 1.5em .5em .5em;
+  border-radius: 2em;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(12, 12, 12, 0.2);
+
 }
 
 .sidebar .nav-item:last-child {
