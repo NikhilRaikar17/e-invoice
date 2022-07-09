@@ -63,7 +63,7 @@ def index():
 # Deliver the application icon.
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(path.join(app.root_path, 'static'), 'images/favicon.ico', mimetype='image/x-icon')
+    return send_from_directory(path.join(app.root_path, 'static'), 'images/apl.png', mimetype='image/x-icon')
 
 # Authenticate the given user at the configured LDAP server and then
 # login the user at this application.

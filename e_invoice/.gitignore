@@ -1,7 +1,4 @@
 *.xml
 /venv
-*.png
-*.jpg
 *.pyc
 .idea
-/*.db
