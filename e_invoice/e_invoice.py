@@ -74,10 +74,11 @@ def login():
     user = Users.query.filter_by(email=email).first()
     if request.method == 'POST':
         if user:
+            flash(f'Welcome {email}', 'success')
             login_user(user)
             return redirect(url_for('index'))
         else:
-            flash('Invalid username or password.')
+            flash('Invalid username or password', 'danger')
     return render_template('login.html')
 
 # Logout the current user.
@@ -100,7 +101,7 @@ def generate_invoice():
 def generate_invoice_1():
     customers = Customers.query.all()
     products = Products.query.all()
-    return render_template("e-invoicegenerator_1.html",customers = customers, products = products)
+    return render_template("invoice_example.html",customers = customers, products = products)
 
 @app.route('/manage_customers', methods=['GET'])
 @login_required

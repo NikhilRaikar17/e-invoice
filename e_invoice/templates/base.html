@@ -57,13 +57,13 @@
 
 
         <!-- Navbar -->
-        <ul class="navbar-nav ml-auto ml-md-0">
-          <li class="nav-item dropdown no-arrow">
+        <ul class="navbar-brand ml-md-2" style="list-style: none;">
+          <li class="dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
               <i class="fas fa-user-circle fa-fw"></i>
               <span class="hidden-xs">{{ current_user.name }}</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-left no-arrow">
               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                 <i class="fa fa-sign-out-alt"></i> Logout
               </a>
