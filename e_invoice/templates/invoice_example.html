@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-xl-5 float-end">
                         
-                        <a  class="btn btn-light text-capitalize border-0" 
+                        <button  class="btn btn-light text-capitalize border-0" 
                             data-toggle="modal" 
                             data-title="Add" 
                             data-target="#select-customer" 
@@ -25,33 +25,37 @@
                             >
                             <i class="fa-solid fa-user" style="color: #2d4e95;"></i> 
                             Select Customer
-                        </a>
+                        </button>
                         
-                        <a  class="btn btn-light text-capitalize border-0"
+                        <button  class="btn btn-light text-capitalize border-0"
                             id="clear_customer_data"
                             name="clear_customer_data" 
                             onclick="clear_customer_details()"
                             data-mdb-ripple-color="dark"
-                            >
-                            <i class="fa-solid fa-arrow-rotate-right"></i> 
+                            disabled>
+                            <i class="fa-solid fa-arrow-rotate-right" style="color: #2d4e95;"></i> 
                             Restart
-                        </a>
+                        </button>
 
-                        <a  class="btn btn-light text-capitalize border-0"
-                            data-mdb-ripple-color="dark">
+                        <button  class="btn btn-light text-capitalize border-0"
+                                data-mdb-ripple-color="dark" 
+                                id="print"
+                                disabled>
                             <i  class="fas fa-print" 
                                 style="color: #2d4e95;">
                             </i> 
                             Print
-                        </a>
+                        </button>
                         
-                        <a  class="btn btn-light text-capitalize"
-                            data-mdb-ripple-color="dark">
+                        <button class="btn btn-light text-capitalize"
+                                data-mdb-ripple-color="dark" 
+                                id="export_file"
+                                disabled>
                             <i  class="far fa-file-pdf" 
                                 style="color: #2d4e95;">
                             </i> 
                             Export
-                        </a>
+                        </button>
                     </div>
                 
                 </div>
@@ -71,9 +75,9 @@
                         <div class="col-xl-8">
                             <ul class="list-unstyled" id="sender_information">
                                 <li class="text-muted" id="customers-name">To: <span style="color:#2d4e95 ;"></span></li>
-                                <li class="text-muted" id="address">Street, City</li>
-                                <li class="text-muted" id="email">State, Country</li>
-                                <li class="text-muted" id="phone_number"><i class="fas fa-phone"> &nbsp;</i> 123-456-789</li>
+                                <li class="text-muted" id="address"></li>
+                                <li class="text-muted" id="email"></li>
+                                <li class="text-muted" id="phone_number"><i class="fas fa-phone"> &nbsp;</i></li>
                             </ul>
                         </div>
                         <div class="col-xl-4">
@@ -111,27 +115,7 @@
                             </thead>
                             
                             <tbody id="products-table-body">
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Pro Package</td>
-                                    <td>4</td>
-                                    <td>$200</td>
-                                    <td>$800</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Web hosting</td>
-                                    <td>1</td>
-                                    <td>$10</td>
-                                    <td>$10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Consulting</td>
-                                    <td>1 year</td>
-                                    <td>$300</td>
-                                    <td>$300</td>
-                                </tr>
+                               
                             </tbody>
                         </table>
                     </div>
@@ -145,6 +129,7 @@
                                 data-title="Add"
                                 data-target="#add_products_invoice"
                                 style="width: 10%;background-color:#6d952d;"
+                                disabled
                             > 
                             Add Products
                             </button>
@@ -154,10 +139,19 @@
                     <div class="row">
                         <div class="col-xl-8">
                         </div>
-                        <div class="col-xl-3 mx-5">
+                        <div class="col-xl-3 mx-5" id="total_amount" style="display:none;">
                             <ul class="list-unstyled">
-                                <li class="text-muted ms-3" id="sub_total"><span class="text-black me-4">SubTotal</span>$1110</li>
-                                <li class="text-muted ms-3 mt-2" id="tax"><span class="text-black me-4">Tax(15%)</span>$111</li>
+
+                                <li class="text-muted ms-3" id="sub_total">
+                                    <span class="text-black me-4">SubTotal</span>
+                                    $1110
+                                </li>
+
+                                <li class="text-muted ms-3 mt-2" id="tax">
+                                    <span class="text-black me-4">Tax(15%)</span>
+                                    $111
+                                </li>
+
                             </ul>
                             <p class="text-black float-start">
                                 <span class="text-black me-3"> Total Amount</span>
@@ -175,7 +169,7 @@
                             <button type="button" 
                                     class="btn btn-primary text-capitalize"
                                     style="background-color:#2d4e95 ;"
-                                    >
+                                    disabled>
                                     Generate PDF
                             </button>
                         </div>
@@ -263,9 +257,14 @@
         var table_header = document.getElementById("products_table_header");
         var table_body = document.getElementById("products-table-body");
         var sender_information = document.getElementById("sender_information");
+        var total_amount = document.getElementById("total_amount");
+        var sub_total = document.getElementById("sub_total");
+        var clear_customer_data = document.getElementById("clear_customer_data");
+        var print = document.getElementById("print");
+        var export_file = document.getElementById("export_file");
 
         function fill_invoice_form(){
-        // Fills the invoice form with customers data
+            // Fills the invoice form with customers data
             var selected_value = select_customers.options[select_customers.selectedIndex].value;
                 if (selected_value != '-1'){
                     $.ajax({
@@ -279,14 +278,57 @@
                                 cust_name.childNodes[1].textContent = result["name"]
                                 address.textContent = result["address"]
                                 email.textContent = result["email"]
-                                phone_number.childNodes[1].textContent = result["phone_number"]
+                                var phone_icon = result["phone_number"]
+                                phone_number.textContent = phone_icon
                                 add_products.disabled = !add_products.disabled;
+                                clear_customer_data.disabled = !clear_customer_data.disabled;
+                                print.disabled = !print.disabled;
+                                export_file.disabled = !export_file.disabled;
                             } else{
                                 add_products.disabled = true;
+                                clear_customer_data.disabled = true;
+                                print.disabled = true;
+                                export_file.disabled = true;
                             }
                         }
                     });
                 }
+            }
+        
+        function update_table_with_products(){
+            // Update the table with products
+            var selected = [];
+            for (var option of select_products.options) {
+                if (option.selected) {
+                    selected.push([option.text,1,option.getAttribute("product_price"),option.getAttribute("product_price")]);
+                }
+            }
+
+            table_body.innerHTML = "";
+
+            var total = 0
+            for (j = 0; j < selected.length; j++) {
+
+                var tbodyTr = document.createElement('tr');
+                var tbodyTh = document.createElement('th');
+                tbodyTh.scope="row"
+                tbodyTh.textContent = j + 1
+                tbodyTr.appendChild(tbodyTh);
+
+                total = total + parseInt(selected[j][2])
+                for (k = 0; k < selected[j].length; k++) {
+                    var tbodyTd = document.createElement('td');
+                    tbodyTd.innerHTML = selected[j][k];
+                    tbodyTr.appendChild(tbodyTd);
+                }
+                table_body.appendChild(tbodyTr);
+            }
+
+            table.appendChild(table_body);
+            total_amount.style.display = 'block';
+            total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
+            var amount = total + 111
+            total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
         }
 
     </script>  
