@@ -61,7 +61,7 @@
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown">
               <i class="fas fa-user-circle fa-fw"></i>
-              <span class="hidden-xs">{{ casdsad }}</span>
+              <span class="hidden-xs">{{ current_user.name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -124,6 +124,13 @@
 
       <div id="content-wrapper">
         <div class="container-fluid">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert" style="width:300px;"> {{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
@@ -180,41 +187,7 @@
 
     
      <!--Error message modal dialog -->
-    <div class="modal fade show" id="errorModal" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Error</h5>
-            <button class="close" type="button" data-dismiss="modal">
-              <span>×</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="modal-footer">
-              <div class="container">
-              {% for message in messages %}
-                <div class="row">
-                  <div class="col">
-                    <b>{{ message }}</b>
-                       <script>
-                        $(document).ready(function(){
-                        $('#errorModal').modal('show');
-                        });
-                       </script>
-                  </div>
-                </div>
-              {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-        {% endwith %}
-        </div>
-      </div>
-    </div>
-    </div>
+    
 
 
     <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -236,6 +209,13 @@
       $(function () {
         $('select').selectpicker();
       });
+      
+      $(function () {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+              this.alert('close');
+        });
+      });
+
     </script>
     
     {% block scripts %}{% endblock %}
