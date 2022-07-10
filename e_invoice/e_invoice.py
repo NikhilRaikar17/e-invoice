@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for, sen
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from models.db_models import *
+import datetime
 
 ##
 ## THE APP
@@ -101,7 +102,8 @@ def generate_invoice():
 def generate_invoice_1():
     customers = Customers.query.all()
     products = Products.query.all()
-    return render_template("invoice_example.html",customers = customers, products = products)
+    date_time = datetime.datetime.today().strftime('%d-%m-%Y')
+    return render_template("invoice_example.html",customers = customers, products = products,date_time=date_time)
 
 @app.route('/manage_customers', methods=['GET'])
 @login_required
