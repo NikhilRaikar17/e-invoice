@@ -28,16 +28,6 @@
                         </button>
                         
                         <button  class="btn btn-light text-capitalize border-0"
-                            id="clear_customer_data"
-                            name="clear_customer_data" 
-                            onclick="clear_customer_details()"
-                            data-mdb-ripple-color="dark"
-                            disabled>
-                            <i class="fa-solid fa-arrow-rotate-right" style="color: #2d4e95;"></i> 
-                            Restart
-                        </button>
-
-                        <button  class="btn btn-light text-capitalize border-0"
                                 data-mdb-ripple-color="dark" 
                                 id="print"
                                 disabled>
@@ -54,8 +44,17 @@
                             <i  class="far fa-file-pdf" 
                                 style="color: #2d4e95;">
                             </i> 
-                            Export
+                            Generate PDF
                         </button>
+
+                        <button class="btn btn-light text-capitalize"
+                                data-mdb-ripple-color="dark"
+                                
+                                disabled>
+                                Save Draft
+                        </button>
+
+                        
                     </div>
                 
                 </div>
@@ -259,7 +258,6 @@
         var sender_information = document.getElementById("sender_information");
         var total_amount = document.getElementById("total_amount");
         var sub_total = document.getElementById("sub_total");
-        var clear_customer_data = document.getElementById("clear_customer_data");
         var print = document.getElementById("print");
         var export_file = document.getElementById("export_file");
 
@@ -281,12 +279,10 @@
                                 var phone_icon = result["phone_number"]
                                 phone_number.textContent = phone_icon
                                 add_products.disabled = !add_products.disabled;
-                                clear_customer_data.disabled = !clear_customer_data.disabled;
                                 print.disabled = !print.disabled;
                                 export_file.disabled = !export_file.disabled;
                             } else{
                                 add_products.disabled = true;
-                                clear_customer_data.disabled = true;
                                 print.disabled = true;
                                 export_file.disabled = true;
                             }
