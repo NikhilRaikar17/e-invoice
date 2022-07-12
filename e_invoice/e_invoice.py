@@ -58,7 +58,7 @@ def load_user(user_id):
 @app.route('/')
 @login_required
 def index():
-    return render_template("e-invoicegenerator.html")
+    return redirect(url_for('.generate_invoice_1'))
 
 
 # Deliver the application icon.
