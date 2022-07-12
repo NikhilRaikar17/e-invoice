@@ -90,20 +90,20 @@ def logout():
     return redirect(url_for('login'))
 
 
+# @app.route('/generate_invoice')
+# @login_required
+# def generate_invoice():
+#     customers = Customers.query.all()
+#     products = Products.query.all()
+#     return render_template("e-invoicegenerator.html",customers = customers, products = products)
+
 @app.route('/generate_invoice')
 @login_required
 def generate_invoice():
     customers = Customers.query.all()
     products = Products.query.all()
-    return render_template("e-invoicegenerator.html",customers = customers, products = products)
-
-@app.route('/generate_invoice_1')
-@login_required
-def generate_invoice_1():
-    customers = Customers.query.all()
-    products = Products.query.all()
     date_time = datetime.datetime.today().strftime('%d-%m-%Y')
-    return render_template("invoice_example.html",customers = customers, products = products,date_time=date_time)
+    return render_template("invoice_generator.html",customers = customers, products = products,date_time=date_time)
 
 @app.route('/manage_customers', methods=['GET'])
 @login_required
