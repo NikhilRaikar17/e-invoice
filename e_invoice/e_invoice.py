@@ -58,7 +58,7 @@ def load_user(user_id):
 @app.route('/')
 @login_required
 def index():
-    return redirect(url_for('.generate_invoice_1'))
+    return redirect(url_for('.generate_invoice'))
 
 
 # Deliver the application icon.
