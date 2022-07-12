@@ -5,69 +5,36 @@ from flask_sqlalchemy import SQLAlchemy
 from models.db_models import *
 import datetime
 
-##
-## THE APP
-##
-
-# This is the application.
+.
 app = Flask(__name__)
-
-##
-## CONFIGURATION
-##
-
-# Session secret key.
 app.config['SECRET_KEY'] = b"B!\x1d\xc6\xb8'\xd6\x97\xe9\xa0\xed\xb1\xe3\x00\xa0\xa1"
-
-# Database configuration.
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-##
-## DATABASE SETUP
-##
-
-# Initialize database manager.
 db.init_app(app)
  
-##
-## LOGIN SETUP
-##
-
-# Initialize login managers.
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# Dictionary containing the users currently logged in.
 current_users = {}
 
-
-# Declare the user loader callback for flask_login. Returns the user data for 
-# the given user_id. Returns None if no user with this user_id is logged in.
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
 
-##
-## ROUTES
-##
 
-    
-# Deliver the start page of the application.
 @app.route('/')
 @login_required
 def index():
     return redirect(url_for('.generate_invoice'))
 
 
-# Deliver the application icon.
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(path.join(app.root_path, 'static'), 'images/apl.png', mimetype='image/x-icon')
 
-# Authenticate the given user at the configured LDAP server and then
-# login the user at this application.
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     email = request.form.get('username')
@@ -82,20 +49,12 @@ def login():
             flash('Invalid username or password', 'danger')
     return render_template('login.html')
 
-# Logout the current user.
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-# @app.route('/generate_invoice')
-# @login_required
-# def generate_invoice():
-#     customers = Customers.query.all()
-#     products = Products.query.all()
-#     return render_template("e-invoicegenerator.html",customers = customers, products = products)
 
 @app.route('/generate_invoice')
 @login_required
@@ -168,10 +127,5 @@ def get_customer_details():
             "phone_number": customer.phone_number
             }
 
-##
-## MAIN
-##
-
-# Run the application.
 if __name__ == "__main__":
     app.run()
