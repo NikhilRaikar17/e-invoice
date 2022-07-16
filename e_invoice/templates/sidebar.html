@@ -40,6 +40,13 @@
       </a>
     </li>
     <li class="nav-item {% if 'settings' in request.url %} border-5 rounded-4 active {% endif %}"
+    {% if 'product_groups' in request.url %} style="background-color:rgb(241, 241, 241);width: 95%;" {% endif %}>
+      <a class="nav-link" href="#">
+        <i class="fa-solid fa-sitemap"></i>
+        <span>Groups</span>
+      </a>
+    </li>
+    <li class="nav-item {% if 'settings' in request.url %} border-5 rounded-4 active {% endif %}"
     {% if 'settings' in request.url %} style="background-color:rgb(241, 241, 241);width: 95%;" {% endif %}>
       <a class="nav-link" href="#">
         <i class="fa-solid fa-sliders"></i>
