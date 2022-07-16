@@ -110,6 +110,7 @@
                                 <th scope="col">Qty</th>
                                 <th scope="col">Unit Price</th>
                                 <th scope="col">Amount</th>
+                                <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             
@@ -131,6 +132,17 @@
                                 disabled
                             > 
                             Add Products
+                            </button>
+                            <button 
+                                class="btn btn-light border-0 text-capitalize float-start ms-3" 
+                                id="add_groups"
+                                data-toggle="modal"
+                                data-title="Add"
+                                data-target="#add_group_products"
+                                style="width: 10%;background-color:#593bdb;border-color: #593bdb;color: rgb(255, 255, 255);"
+                                disabled
+                            > 
+                            Add Groups
                             </button>
                         </div>
                     </div>
@@ -214,12 +226,23 @@
               <div class="modal-body">
     
                 <div class="form-group">
-                  <label for="customer-name"><b>Products</b></label>
-                  <select class="selectpicker" multiple id="select_products" >
+                  <label for="customer-name"><b>Select Products</b></label>
+                  <select class="form-control selectpicker" 
+                        multiple 
+                        title="Select products to add" 
+                        data-size="7" 
+                        data-actions-box="true" 
+                        id="select_products" 
+                        >
                     {% for product in products %}
                         <option value="{{product.id}}" product_price="{{product.price}}"> {{ product.name }} </option>
                     {% endfor %}
                   </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="customer-name"><b>Select Quantity</b></label>
+                  <input type="number" class="form-control">
                 </div>
               </div>
     
@@ -288,31 +311,56 @@
                 }
             }
 
-            table_body.innerHTML = "";
+            $('#select_products').selectpicker('deselectAll');
 
             var total = 0
             for (j = 0; j < selected.length; j++) {
-
-                var tbodyTr = document.createElement('tr');
-                var tbodyTh = document.createElement('th');
-                tbodyTh.scope="row"
-                tbodyTh.textContent = j + 1
-                tbodyTr.appendChild(tbodyTh);
-
+                var tr_id = selected[j][0];
                 total = total + parseInt(selected[j][2])
-                for (k = 0; k < selected[j].length; k++) {
-                    var tbodyTd = document.createElement('td');
-                    tbodyTd.innerHTML = selected[j][k];
-                    tbodyTr.appendChild(tbodyTd);
-                }
-                table_body.appendChild(tbodyTr);
-            }
+                var has_element = document.querySelectorAll("tr[id='" + tr_id + "']")
+                if (has_element.length > 0) {
+                    var quantity = parseInt(has_element[0].childNodes[2].textContent);
+                    var unit_price = parseInt(has_element[0].childNodes[3].textContent);
+                    var amount = parseInt(has_element[0].childNodes[4].textContent);
+                    
+                    quantity = quantity + 1; 
+                    has_element[0].childNodes[2].textContent = quantity;
+                    
+                    amount = quantity * unit_price; 
+                    has_element[0].childNodes[4].textContent = amount;
 
-            table.appendChild(table_body);
-            total_amount.style.display = 'block';
-            total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
-            var amount = total + 111
-            total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
+                } 
+
+                else{
+                    var tbodyTr = document.createElement('tr');
+                    var tbodyTh = document.createElement('th');
+                    tbodyTh.scope="row"
+                    tbodyTh.textContent = j + 1
+                    tbodyTr.id=selected[j][0];
+                    tbodyTr.appendChild(tbodyTh);
+                    
+                    
+                    for (k = 0; k < selected[j].length; k++) {
+                        
+                        var tbodyTd = document.createElement('td');
+                        tbodyTd.innerHTML = selected[j][k];
+                        tbodyTr.appendChild(tbodyTd);
+                    }
+
+                    var tbodyTd_delete = document.createElement('td');
+                    var delete_button = document.createElement('span');
+                    delete_button.innerHTML = `<i class="fa-solid fa-trash" style="color:red;"></i>`
+                    tbodyTd_delete.appendChild(delete_button)
+                    tbodyTr.appendChild(tbodyTd_delete);
+                    table_body.appendChild(tbodyTr);
+                }
+
+                table.appendChild(table_body);
+                total_amount.style.display = 'block';
+                total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
+                var amount = total + 111
+                total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
+            }
         }
 
     </script>  
