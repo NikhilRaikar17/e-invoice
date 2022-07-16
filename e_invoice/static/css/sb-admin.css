@@ -138,6 +138,8 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   border-radius: 2em;
   text-align: center;
   box-shadow: 0 5px 10px rgba(12, 12, 12, 0.2);
+  font-weight: 400;
+  color: #bdbdc7;
 
 }
 
@@ -178,7 +180,9 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
-  color: rgba(12, 1, 1, 0.75);
+  color: rgba(105, 95, 95, 0.75);
+  border-radius: 20px;
+  border: 1px solid rgba(241, 241, 241)
 }
 
 .sidebar.toggled {
