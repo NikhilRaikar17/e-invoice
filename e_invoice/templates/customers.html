@@ -30,8 +30,60 @@
           <td>{{ customer.email }}</td>
           <td>{{ customer.address }}</td>
           <td>{{customer.phone_number}} </td>
-          <td></td>
+          <td>
+            <i class="open_edit_customer_dialog fa-solid fa-pen-to-square me-3" data-toggle="modal" data-title="Add"
+                id="edit_{{customer.name}}" style="color:green;" data-id="{{customer.id}}" data-target="#edit_{{customer.name}}" type="button"></i>
+            <i class="fa-solid fa-trash" id="delete_{{customer.name}}" style="color:red;"></i>
+          </td>
         </tr>
+
+        <div class="modal fade" id="edit_{{customer.name}}" tabindex="-1">
+          <div class="modal-dialog">
+            <form id="edit-vacation-form" action="{{url_for('edit_customer')}}" method="POST">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Heading">Edit customer</h4>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <span>×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" id="edited_customer_id">
+                  <div class="form-group">
+                    <label for="customer-name"><b>Name</b></label>
+                    <input type="text" class="form-control" id="edited_customer_name" name="edited_customer_name" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: Aleem Khan</small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-email"><b>Email</b></label>
+                    <input class="form-control" id="edited_customer_email" name="edited_customer_email" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: aleemkhan@gmail.com</small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-address"><b>Address</b></label>
+                    <textarea class="form-control" id="edited_customer_address" name="edited_customer_address" value="" required></textarea>
+                    <small id="emailHelp" class="form-text text-muted">Example: 76185,KA Germany </small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-phone"><b>Phone Number</b></label>
+                    <input class="form-control" id="edited_customer_phone" name="edited_customer_phone" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: +49-17656525546</small>
+                  </div>
+                  
+                </div>
+      
+                <div class="modal-footer ">
+                  <button class="btn btn-success btn-lg" style="width: 100%;">
+                    <i class="fa fa-add"></i> Update
+                  </button>
+                </div>
+              </div>
+            </form>        
+          </div>
+        </div>
       {% endfor %}
       </tbody>
     </table>
@@ -85,11 +137,34 @@
       </form>        
     </div>
   </div>
+  
+  
 
 
 {% endblock %}
 
 {% block scripts %}
   <script>
+    $(document).on("click", ".open_edit_customer_dialog", function() {
+      $.ajax({
+            type: "GET",
+            url: "{{url_for('get_customer_details')}}",
+            data: {"customer_id":   $(this).data('id') },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result){
+                if (!result["ERROR"]){
+                  $(".modal-body #edited_customer_name").val(result["name"]);
+                  $(".modal-body #edited_customer_email").val(result["email"]);
+                  $(".modal-body #edited_customer_address").val(result["address"]);
+                  $(".modal-body #edited_customer_phone").val(result["phone_number"]);
+                  $(".modal-body #edited_customer_id").val($(this).data('id'));
+                } else{
+                    console.log("wasuhjkashd");
+                }
+            }
+        });
+    });
+    
   </script>  
 {% endblock %}

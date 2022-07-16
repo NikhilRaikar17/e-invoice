@@ -126,5 +126,28 @@ def get_customer_details():
             "phone_number": customer.phone_number
             }
 
+@app.route('/edit_customer', methods=['POST'])
+@login_required
+def edit_customer():
+    pass
+    # try:
+    #     customer_id = request.form.get('edited_customer_id')
+    #     name = request.form.get('edited_customer_name')
+    #     address = request.form.get('edited_customer_address')
+    #     email = request.form.get('edited_customer_email')
+    #     phone_number = request.form.get('edited_customer_phone')
+
+    #     valid_customer = Customers.query.filter_by(id=id).first()
+    #     if valid_customer:
+    #         unique_customer = Customers.query.filter_by(name=name).first()
+    #         if not unique_customer:
+    #             valid_customer.name == name
+    #         pass
+
+
+
+
+
+
 if __name__ == "__main__":
     app.run()
