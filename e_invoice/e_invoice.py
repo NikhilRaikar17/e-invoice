@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from models.db_models import *
 import datetime
 
-.
 app = Flask(__name__)
 app.config['SECRET_KEY'] = b"B!\x1d\xc6\xb8'\xd6\x97\xe9\xa0\xed\xb1\xe3\x00\xa0\xa1"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
