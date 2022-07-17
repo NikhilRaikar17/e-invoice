@@ -210,9 +210,10 @@ def edit_product():
         flash("Product could not be updated, please check the form", 'danger')
         return redirect(url_for('.manage_invoice_items'))
 
-
-
-
+@app.route('/dashboard', methods=['GET'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 <ul class="sidebar border border-2 rounded navbar-nav ">
-    <li class="nav-item" >
-      <a class="nav-link" href="#">
+  <li class="nav-item  {% if 'dashboard' in request.url %} border-5 rounded-4 active {% endif %}"
+  {% if 'dashboard' in request.url %} style="background-color:rgb(241, 241, 241);width: 95%;" {% endif %}>
+      <a class="nav-link" href="{{ url_for('dashboard') }}">
         <i class="fa-solid fa-house"></i>
         <span>Dashboard</span>
-        
       </a>
       
       

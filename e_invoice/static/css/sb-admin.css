@@ -101,7 +101,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   border: 0;
   font-weight: 900;
   content: '\f105';
-  font-family: 'Font Awesome 5 Free';
+  font-family: sans-serif;
 }
 
 .navbar-nav .nav-item.dropdown.show .dropdown-toggle::after {
@@ -138,7 +138,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   border-radius: 2em;
   text-align: center;
   box-shadow: 0 5px 10px rgba(12, 12, 12, 0.2);
-  font-weight: 400;
+  font-weight: 500;
   color: #bdbdc7;
 
 }
