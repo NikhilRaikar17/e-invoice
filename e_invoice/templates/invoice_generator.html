@@ -276,31 +276,32 @@
         function fill_invoice_form(){
             // Fills the invoice form with customers data
             var selected_value = select_customers.options[select_customers.selectedIndex].value;
-                if (selected_value != '-1'){
-                    $.ajax({
-                        type: "GET",
-                        url: "{{url_for('get_customer_details')}}",
-                        data: {"customer_id":   selected_value },
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function(result){
-                            if (!result["ERROR"]){
-                                cust_name.childNodes[1].innerHTML = `<span style="color:#373756;">${result["name"]}</span>`;
-                                address.innerHTML = `<i class="fa-solid fa-address-card"></i> - ${result["address"]}`
-                                email.innerHTML = `<i class="fa-solid fa-at"></i> - ${result["email"]}`
-                                phone_number.innerHTML = `<i class="fas fa-phone"></i> - ${result["phone_number"]}`
-                                add_products.disabled = !add_products.disabled;
-                                print.disabled = !print.disabled;
-                                export_file.disabled = !export_file.disabled;
-                            } else{
-                                add_products.disabled = true;
-                                print.disabled = true;
-                                export_file.disabled = true;
-                            }
+            add_products.disabled = true;
+            if (selected_value != '-1') {
+                $.ajax({
+                    type: "GET",
+                    url: "{{url_for('get_customer_details')}}",
+                    data: {"customer_id":   selected_value },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(result){
+                        if (!result["ERROR"]){
+                            cust_name.childNodes[1].innerHTML = `<span style="color:#373756;">${result["name"]}</span>`;
+                            address.innerHTML = `<i class="fa-solid fa-address-card"></i> - ${result["address"]}`
+                            email.innerHTML = `<i class="fa-solid fa-at"></i> - ${result["email"]}`
+                            phone_number.innerHTML = `<i class="fas fa-phone"></i> - ${result["phone_number"]}`
+                            add_products.disabled = !add_products.disabled;
+                            print.disabled = !print.disabled;
+                            export_file.disabled = !export_file.disabled;
+                        } else{
+                            add_products.disabled = true;
+                            print.disabled = true;
+                            export_file.disabled = true;
                         }
-                    });
-                }
+                    }
+                });
             }
+        }
         
         function update_table_with_products(){
             // Update the table with products
