@@ -242,7 +242,7 @@
                 
                 <div class="form-group">
                   <label for="customer-name"><b>Select Quantity</b></label>
-                  <input type="number" class="form-control">
+                  <input type="number" id="product_quantity" name="product_quantity" class="form-control" required />
                 </div>
               </div>
     
@@ -272,6 +272,7 @@
         var sub_total = document.getElementById("sub_total");
         var print = document.getElementById("print");
         var export_file = document.getElementById("export_file");
+        
 
         function fill_invoice_form(){
             // Fills the invoice form with customers data
@@ -306,13 +307,12 @@
         function update_table_with_products(){
             // Update the table with products
             var selected = [];
+            var product_quantity = document.getElementById("product_quantity");
             for (var option of select_products.options) {
                 if (option.selected) {
-                    selected.push([option.text,1,option.getAttribute("product_price"),option.getAttribute("product_price")]);
+                    selected.push([option.text,parseInt(product_quantity.value),option.getAttribute("product_price"),option.getAttribute("product_price")]);
                 }
             }
-
-            $('#select_products').selectpicker('deselectAll');
 
             var total = 0
             for (j = 0; j < selected.length; j++) {
@@ -324,7 +324,7 @@
                     var unit_price = parseInt(has_element[0].childNodes[3].textContent);
                     var amount = parseInt(has_element[0].childNodes[4].textContent);
                     
-                    quantity = quantity + 1; 
+                    quantity = quantity + parseInt(product_quantity.value); 
                     has_element[0].childNodes[2].textContent = quantity;
                     
                     amount = quantity * unit_price; 
@@ -339,10 +339,8 @@
                     tbodyTh.textContent = j + 1
                     tbodyTr.id=selected[j][0];
                     tbodyTr.appendChild(tbodyTh);
-                    
-                    
+         
                     for (k = 0; k < selected[j].length; k++) {
-                        
                         var tbodyTd = document.createElement('td');
                         tbodyTd.innerHTML = selected[j][k];
                         tbodyTr.appendChild(tbodyTd);
@@ -356,6 +354,7 @@
                     table_body.appendChild(tbodyTr);
                 }
 
+                $('#select_products').selectpicker('deselectAll');
                 table.appendChild(table_body);
                 total_amount.style.display = 'block';
                 total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
