@@ -126,23 +126,44 @@ def get_customer_details():
             "phone_number": customer.phone_number
             }
 
-@app.route('/edit_customer', methods=['POST'])
+@app.route('/edit_customer', methods=['GET','POST'])
 @login_required
 def edit_customer():
-    pass
-    # try:
-    #     customer_id = request.form.get('edited_customer_id')
-    #     name = request.form.get('edited_customer_name')
-    #     address = request.form.get('edited_customer_address')
-    #     email = request.form.get('edited_customer_email')
-    #     phone_number = request.form.get('edited_customer_phone')
+    try:
+        customer_id = request.form.get('edited_customer_id')
+        name = request.form.get('edited_customer_name')
+        address = request.form.get('edited_customer_address')
+        email = request.form.get('edited_customer_email')
+        phone_number = request.form.get('edited_customer_phone')
 
-    #     valid_customer = Customers.query.filter_by(id=id).first()
-    #     if valid_customer:
-    #         unique_customer = Customers.query.filter_by(name=name).first()
-    #         if not unique_customer:
-    #             valid_customer.name == name
-    #         pass
+        valid_customer = Customers.query.filter_by(id=int(customer_id)).first()
+
+        if valid_customer.name != name:
+            valid_customer.name = name
+
+        if valid_customer.address != address:
+            valid_customer.address = address
+
+        if valid_customer.email != email:
+            valid_customer.email = email
+
+        if valid_customer.phone_number != phone_number:
+            valid_customer.phone_number = phone_number
+        
+        db.session.commit()
+        flash("Successfully updated the customer details", 'success')
+
+        return redirect(url_for('.manage_customers'))
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        flash("Customer could not be updated, please check the form", 'danger')
+        return redirect(url_for('.manage_customers'))
+
+@app.route('/login_2', methods=['GET'])
+@login_required
+def login_2():
+    return render_template('login_2.html')
 
 
 
