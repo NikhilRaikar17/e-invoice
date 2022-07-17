@@ -137,23 +137,24 @@ def edit_customer():
         phone_number = request.form.get('edited_customer_phone')
 
         valid_customer = Customers.query.filter_by(id=int(customer_id)).first()
+        if valid_customer:
+            if valid_customer.name != name:
+                valid_customer.name = name
 
-        if valid_customer.name != name:
-            valid_customer.name = name
+            if valid_customer.address != address:
+                valid_customer.address = address
 
-        if valid_customer.address != address:
-            valid_customer.address = address
+            if valid_customer.email != email:
+                valid_customer.email = email
 
-        if valid_customer.email != email:
-            valid_customer.email = email
-
-        if valid_customer.phone_number != phone_number:
-            valid_customer.phone_number = phone_number
+            if valid_customer.phone_number != phone_number:
+                valid_customer.phone_number = phone_number
         
-        db.session.commit()
-        flash("Successfully updated the customer details", 'success')
-
-        return redirect(url_for('.manage_customers'))
+            db.session.commit()
+            flash("Successfully updated the customer details", 'success')
+            return redirect(url_for('.manage_customers'))
+        else:
+            raise Exception("Invalid customer details")
     except Exception as e:
         db.session.rollback()
         db.session.flush()
@@ -164,6 +165,50 @@ def edit_customer():
 @login_required
 def login_2():
     return render_template('login_2.html')
+
+@app.route('/get_product_details', methods=['GET'])
+@login_required
+def get_product_details():
+    """ Get all product details using product ID"""
+
+    product_id = request.args.get('product_id')
+    product = Products.query.filter_by(id=int(product_id)).first()
+    if not product:
+        return {"ERROR":"FAILED"}
+
+    return {
+            "name": product.name,
+            "price": product.price
+            }
+
+@app.route('/edit_product', methods=['POST'])
+@login_required
+def edit_product():
+    try:
+        product_id = request.form.get('update_product_id')
+        name = request.form.get('update_item_name')
+        price = request.form.get('update_item_price')
+
+        valid_product = Products.query.filter_by(id=int(product_id)).first()
+        if valid_product:
+            if valid_product.name != name:
+                valid_product.name = name
+
+            if valid_product.price != price:
+                valid_product.price = price
+
+            db.session.commit()
+            flash("Successfully updated the product", 'success')
+            return redirect(url_for('.manage_invoice_items'))
+
+        else:
+            raise Exception("Invalid product")
+        
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        flash("Product could not be updated, please check the form", 'danger')
+        return redirect(url_for('.manage_invoice_items'))
 
 
 
