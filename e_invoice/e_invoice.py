@@ -215,6 +215,35 @@ def edit_product():
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/dummy_data', methods=['GET','POST'])
+@login_required
+def dummy_data():
+    if request.method == 'POST':
+        customer_count = int(request.form['customer_count'])
+        product_count = int(request.form['product_count'])
+        try:
+            for count in range(0,customer_count):
+                new_customer = Customers(name=f'customer_{count}', email=f"customer_{count}@gmail.com",
+                                        address="76890,KA Germany", phone_number='908728738767')
+                db.session.add(new_customer)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            db.session.flush()
+        
+        try:
+            for count in range(0,product_count):
+                new_products = Products(name=f'product_{count}', price=count+180)
+                db.session.add(new_products)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            db.session.flush()
+
+
+
+    return render_template('dummy_data.html')
+
 
 if __name__ == "__main__":
     app.run()
