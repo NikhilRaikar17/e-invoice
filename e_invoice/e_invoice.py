@@ -219,6 +219,19 @@ def dashboard():
 @login_required
 def dummy_data():
     if request.method == 'POST':
+        delete_all = request.form['delete_all'] or False
+        if delete_all:
+            try:
+                Customers.query.delete()
+                Products.query.delete()
+                db.session.commit()
+                flash("Deleted all data of customers and products!",'success')
+            except:
+                db.session.rollback()
+                db.session.flush()
+                flash("Could not delete data of customers and products!", 'danger')
+            return render_template('dummy_data.html')
+
         customer_count = int(request.form['customer_count'])
         product_count = int(request.form['product_count'])
         try:
@@ -227,11 +240,7 @@ def dummy_data():
                                         address="76890,KA Germany", phone_number='908728738767')
                 db.session.add(new_customer)
             db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            db.session.flush()
         
-        try:
             for count in range(0,product_count):
                 new_products = Products(name=f'product_{count}', price=count+180)
                 db.session.add(new_products)
@@ -239,8 +248,6 @@ def dummy_data():
         except Exception as e:
             db.session.rollback()
             db.session.flush()
-
-
 
     return render_template('dummy_data.html')
 
