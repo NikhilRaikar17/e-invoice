@@ -265,11 +265,12 @@
                 <div class="form-group">
                   <label for="customer-name"><b>Select Quantity</b></label>
                   <input type="number" id="product_quantity" name="product_quantity" class="form-control" required />
+                  <span name="product_quantity_error_span" id="product_quantity_error_span" style="display: none;">Product Quantity cannot be empty!</span>
                 </div>
               </div>
     
               <div class="modal-footer ">
-                <button class="btn btn-success btn-lg" data-dismiss="modal" style="width: 100%;" onclick="update_table_with_products();">
+                <button class="btn btn-success btn-lg" style="width: 100%;" onclick="update_table_with_products();">
                   Select
                 </button>
               </div>
@@ -348,59 +349,72 @@
             // Update the table with products
             var selected = [];
             var product_quantity = document.getElementById("product_quantity");
-            for (var option of select_products.options) {
-                if (option.selected) {
-                    selected.push([option.text,parseInt(product_quantity.value),option.getAttribute("product_price"),option.getAttribute("product_price")]);
+            var product_quantity_error_span = document.getElementById("product_quantity_error_span")
+            if (!product_quantity.value){
+                product_quantity_error_span.style.display = 'block';
+            } else {
+                product_quantity_error_span.style.display = 'none';
+
+                for (var option of select_products.options) {
+                    if (option.selected) {
+                        selected.push([option.text,parseInt(product_quantity.value),
+                        option.getAttribute("product_price"),option.getAttribute("product_price")]);
+                    }
                 }
-            }
 
-            var total = 0
-            for (j = 0; j < selected.length; j++) {
-                var tr_id = selected[j][0];
-                total = total + parseInt(selected[j][2])
-                var has_element = document.querySelectorAll("tr[id='" + tr_id + "']")
-                if (has_element.length > 0) {
-                    var quantity = parseInt(has_element[0].childNodes[2].textContent);
-                    var unit_price = parseInt(has_element[0].childNodes[3].textContent);
-                    var amount = parseInt(has_element[0].childNodes[4].textContent);
-                    
-                    quantity = quantity + parseInt(product_quantity.value); 
-                    has_element[0].childNodes[2].textContent = quantity;
-                    
-                    amount = quantity * unit_price; 
-                    has_element[0].childNodes[4].textContent = amount;
+                var total = 0
+                for (j = 0; j < selected.length; j++) {
+                    var tr_id = selected[j][0];
+                    total = total + parseInt(selected[j][2])
+                    var has_element = document.querySelectorAll("tr[id='" + tr_id + "']")
+                    if (has_element.length > 0) {
+                        var quantity = parseInt(has_element[0].childNodes[2].textContent);
+                        var unit_price = parseInt(has_element[0].childNodes[3].textContent);
+                        var amount = parseInt(has_element[0].childNodes[4].textContent);
+                        
+                        quantity = quantity + parseInt(product_quantity.value); 
+                        has_element[0].childNodes[2].textContent = quantity;
+                        
+                        amount = quantity * unit_price; 
+                        has_element[0].childNodes[4].textContent = amount;
 
-                } 
+                    } 
 
-                else{
-                    var tbodyTr = document.createElement('tr');
-                    var tbodyTh = document.createElement('th');
-                    tbodyTh.scope="row"
-                    tbodyTh.textContent = j + 1
-                    tbodyTr.id=selected[j][0];
-                    tbodyTr.appendChild(tbodyTh);
-         
-                    for (k = 0; k < selected[j].length; k++) {
-                        var tbodyTd = document.createElement('td');
-                        tbodyTd.innerHTML = selected[j][k];
-                        tbodyTr.appendChild(tbodyTd);
+                    else{
+                        var tbodyTr = document.createElement('tr');
+                        var tbodyTh = document.createElement('th');
+                        tbodyTh.scope="row"
+                        tbodyTh.textContent = j + 1
+                        tbodyTr.id=selected[j][0];
+                        tbodyTr.appendChild(tbodyTh);
+            
+                        for (k = 0; k < selected[j].length; k++) {
+                            var tbodyTd = document.createElement('td');
+                            tbodyTd.innerHTML = selected[j][k];
+                            tbodyTr.appendChild(tbodyTd);
+                        }
+
+                        var tbodyTd_delete = document.createElement('td');
+                        var delete_button = document.createElement('span');
+                        delete_button.innerHTML = `<i class="fa-solid fa-trash" style="color:red;"></i>`
+                        tbodyTd_delete.appendChild(delete_button)
+                        tbodyTr.appendChild(tbodyTd_delete);
+                        table_body.appendChild(tbodyTr);
                     }
 
-                    var tbodyTd_delete = document.createElement('td');
-                    var delete_button = document.createElement('span');
-                    delete_button.innerHTML = `<i class="fa-solid fa-trash" style="color:red;"></i>`
-                    tbodyTd_delete.appendChild(delete_button)
-                    tbodyTr.appendChild(tbodyTd_delete);
-                    table_body.appendChild(tbodyTr);
+                    $('#select_products').selectpicker('deselectAll');
+                    table.appendChild(table_body);
+                    total_amount.style.display = 'block';
+                    total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
+                    var amount = total + 111
+                    total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
                 }
 
-                $('#select_products').selectpicker('deselectAll');
-                table.appendChild(table_body);
-                total_amount.style.display = 'block';
-                total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
-                var amount = total + 111
-                total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
+                
+
             }
+
+            
         }
 
     </script>  
