@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-xl-5 float-end">
                         
-                        <button  class="btn btn-light text-capitalize border-0" 
+                        <!-- <button  class="btn btn-light text-capitalize border-0" 
                             data-toggle="modal" 
                             data-title="Add" 
                             data-target="#select-customer" 
@@ -25,7 +25,7 @@
                             >
                             <i class="fa-solid fa-user" style="color: #373756;"></i> 
                             Select Customer
-                        </button>
+                        </button> -->
                         
                         <button  class="btn btn-light text-capitalize border-0"
                                 data-mdb-ripple-color="dark" 
@@ -73,7 +73,17 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <ul class="list-unstyled" id="sender_information">
-                                <li class="text-muted" id="customers-name">To: <span style="color:#373756 ;"></span></li>
+                                <li class="text-muted" id="customers-name">To: 
+                                    <button  class="btn btn-sm btn-light text-capitalize border-0" 
+                                        data-toggle="modal" 
+                                        data-title="Add" 
+                                        data-target="#select-customer" 
+                                        data-mdb-ripple-color="dark"
+                                        >
+                                        <i class="fa-solid fa-user" style="color: #373756;"></i> 
+                                        Select Customer
+                                    </button>
+                                </li>
                                 <li class="text-muted" id="address"><i class="fa-solid fa-address-card"></i></li>
                                 <li class="text-muted" id="email"><i class="fa-solid fa-at"></i></li>
                                 <li class="text-muted" id="phone_number"><i class="fas fa-phone"> &nbsp;</i></li>
@@ -313,6 +323,24 @@
                         }
                     }
                 });
+            } 
+            if (selected_value == '-1') {
+                cust_name.childNodes[1].innerHTML = `<button  class="btn btn-sm btn-light text-capitalize border-0" 
+                                                        data-toggle="modal" 
+                                                        data-title="Add" 
+                                                        data-target="#select-customer" 
+                                                        data-mdb-ripple-color="dark"
+                                                        >
+                                                        <i class="fa-solid fa-user" style="color: #373756;"></i> 
+                                                        Select Customer
+                                                    </button>`;
+                address.innerHTML = `<i class="fa-solid fa-address-card"></i>`
+                email.innerHTML = `<i class="fa-solid fa-at"></i>`
+                phone_number.innerHTML = `<i class="fas fa-phone"></i>`
+                add_products.disabled = true;
+                print.disabled = true;
+                export_file.disabled = true;
+
             }
         }
         
