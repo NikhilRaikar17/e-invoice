@@ -219,7 +219,7 @@ def dashboard():
 @login_required
 def dummy_data():
     if request.method == 'POST':
-        delete_all = request.form['delete_all'] or False
+        delete_all = request.form['delete_all'] if 'delete_all' in request.form else None
         if delete_all:
             try:
                 Customers.query.delete()
