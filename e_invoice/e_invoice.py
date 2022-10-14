@@ -1,21 +1,14 @@
 from os import path
 from flask import Flask, flash, redirect, render_template, request, url_for, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, login_required
-from flask_sqlalchemy import SQLAlchemy
-from models.db_models import *
+from .models.db_models import *
 import datetime
+from e_invoice import create_app,db
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = b"B!\x1d\xc6\xb8'\xd6\x97\xe9\xa0\xed\xb1\xe3\x00\xa0\xa1"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
- 
+app = create_app()
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
 current_users = {}
 
 @login_manager.user_loader
@@ -250,7 +243,3 @@ def dummy_data():
             db.session.flush()
 
     return render_template('dummy_data.html')
-
-
-if __name__ == "__main__":
-    app.run()

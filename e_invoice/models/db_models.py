@@ -1,6 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from e_invoice import db
 
 class Users(db.Model):
     __tablename__ = "users"
