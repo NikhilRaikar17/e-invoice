@@ -228,18 +228,64 @@ def dummy_data():
         customer_count = int(request.form['customer_count'])
         product_count = int(request.form['product_count'])
         try:
-            for count in range(0,customer_count):
-                new_customer = Customers(name=f'customer_{count}', email=f"customer_{count}@gmail.com",
-                                        address="76890,KA Germany", phone_number='908728738767')
-                db.session.add(new_customer)
-            db.session.commit()
-        
-            for count in range(0,product_count):
-                new_products = Products(name=f'product_{count}', price=count+180)
-                db.session.add(new_products)
-            db.session.commit()
+            if customer_count:
+                for count in range(0,customer_count):
+                    new_customer = Customers(name=f'customer_{count}', email=f"customer_{count}@gmail.com",
+                                            address="76890,KA Germany", phone_number='908728738767')
+                    db.session.add(new_customer)
+                db.session.commit()
+
+            if product_count:
+                for count in range(0,product_count):
+                    new_products = Products(name=f'product_{count}', price=count+180)
+                    db.session.add(new_products)
+                db.session.commit()
+
         except Exception as e:
             db.session.rollback()
             db.session.flush()
 
     return render_template('dummy_data.html')
+
+# @app.route('/generate_customer_invoice', methods=['GET','POST'])
+# @login_required
+# def generate_customer_invoice():
+#     today = datetime.today().strftime("%d/%m/%Y")
+#     invoice_number = 123
+#     from_addr = {
+#         'company_name': 'Python Tip',
+#         'addr1': '12345 Sunny Road',
+#         'addr2': 'Sunnyville, CA 12345'
+#     }
+#     to_addr = {
+#         'company_name': 'Acme Corp',
+#         'person_name': 'John Dilly',
+#         'person_email': 'john@example.com'
+#     }
+#     items = [
+#         {
+#             'title': 'website design',
+#             'charge': 300.00
+#         },{
+#             'title': 'Hosting (3 months)',
+#             'charge': 75.00
+#         },{
+#             'title': 'Domain name (1 year)',
+#             'charge': 10.00
+#         }
+#     ]
+#     duedate = "August 1, 2018"
+#     total = sum([i['charge'] for i in items])
+#     rendered = render_template('invoice.html',
+#                             date = today,
+#                             from_addr = from_addr,
+#                             to_addr = to_addr,
+#                             items = items,
+#                             total = total,
+#                             invoice_number = invoice_number,
+#                             duedate = duedate)
+#     html = HTML(string=rendered)
+#     rendered_pdf = html.write_pdf()
+#     return send_file(
+#             io.BytesIO(rendered_pdf),
+#             attachment_filename='invoice.pdf')
