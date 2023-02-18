@@ -181,11 +181,12 @@
                             $111
                         </li>
 
+                        <li class="text-black ms-3 mt-2" id="final_amount">
+                            <span class="text-black me-3"> Total Amount</span>
+                            $1221
+                        </li>
+
                     </ul>
-                    <p class="text-black float-start">
-                        <span class="text-black me-3"> Total Amount</span>
-                        <span style="font-size: 25px;">$1221</span>
-                    </p>
                 </div>
             </div>
 
@@ -288,6 +289,7 @@
         var sub_total = document.getElementById("sub_total");
         var print = document.getElementById("print");
         var export_file = document.getElementById("export_file");
+        var total = 0
         
 
         function fill_invoice_form(){
@@ -356,10 +358,10 @@
                     }
                 }
 
-                var total = 0
+                
                 for (j = 0; j < selected.length; j++) {
                     var tr_id = selected[j][0];
-                    total = total + parseInt(selected[j][2])
+                    total = total + parseInt(selected[j][3])
                     var has_element = document.querySelectorAll("tr[id='" + tr_id + "']")
                     if (has_element.length > 0) {
                         var quantity = parseInt(has_element[0].childNodes[2].textContent);
@@ -400,8 +402,8 @@
                     table.appendChild(table_body);
                     total_amount.classList.remove('d-none');
                     total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
-                    var amount = total + 111
-                    total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
+                    var amount = total + parseInt(111);
+                    total_amount.childNodes[1].childNodes[5].childNodes[2].textContent = "$" + amount;
                 }
 
                 
