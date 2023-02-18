@@ -271,6 +271,33 @@
             </div>       
         </div>
     </div>
+    
+    <div class="modal fade" id="delete_added_product" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Product?</h4>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to delete the product?
+                    </p>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <span>Close</span>
+                        </button>
+                        <button class="btn btn-danger" onclick="remvoe_tablerow();">
+                            Delete
+                        </button>
+                    </div>
+                </div>       
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -391,9 +418,7 @@
                         }
 
                         var tbodyTd_delete = document.createElement('td');
-                        var delete_button = document.createElement('span');
-                        delete_button.innerHTML = `<i class="fa-solid fa-trash" style="color:red;"></i>`
-                        tbodyTd_delete.appendChild(delete_button)
+                        tbodyTd_delete.innerHTML = `<i class="fa-solid fa-trash" onclick="delete_product(this)" style="color:red;"></i>`
                         tbodyTr.appendChild(tbodyTd_delete);
                         table_body.appendChild(tbodyTr);
                     }
@@ -411,6 +436,15 @@
             }
 
             
+        }
+
+
+        function delete_product(e){
+            $('#delete_added_product').modal('show');
+        }
+
+        function remvoe_tablerow(){
+            console.log("Came here and worked perfectly fine!");
         }
 
     </script>  
