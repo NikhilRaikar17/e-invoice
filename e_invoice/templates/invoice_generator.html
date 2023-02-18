@@ -168,9 +168,7 @@
             </div>
             
             <div class="row">
-                <div class="col-xl-8">
-                </div>
-                <div class="col-xl-3 mx-5" id="total_amount" style="display:none;">
+                <div class="col-lg-12 d-flex d-none justify-content-end" id="total_amount">
                     <ul class="list-unstyled">
 
                         <li class="text-muted ms-3" id="sub_total">
@@ -352,8 +350,9 @@
 
                 for (var option of select_products.options) {
                     if (option.selected) {
+                        var final_amount = parseInt(option.getAttribute("product_price")) * parseInt(product_quantity.value)
                         selected.push([option.text,parseInt(product_quantity.value),
-                        option.getAttribute("product_price"),option.getAttribute("product_price")]);
+                        option.getAttribute("product_price"), final_amount]);
                     }
                 }
 
@@ -399,7 +398,7 @@
 
                     $('#select_products').selectpicker('deselectAll');
                     table.appendChild(table_body);
-                    total_amount.style.display = 'block';
+                    total_amount.classList.remove('d-none');
                     total_amount.childNodes[1].childNodes[1].childNodes[2].textContent = "$" + total;
                     var amount = total + 111
                     total_amount.childNodes[3].childNodes[3].textContent = "$" + amount;
