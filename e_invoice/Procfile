@@ -1,1 +1,1 @@
-web: gunicorn e_invoice:app --log-file -
+web: gunicorn manage:gunicorn_app --log-file -
