@@ -132,7 +132,7 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .sidebar {
   /* background-color: #373756; */
-  background-color: hsl(198, 83%, 24%);
+  background-color: hsl(288, 62%, 14%);
   border-radius: 12px solid black !important;
   min-height: calc(100vh - 56px);
   padding: 1.5em .5em .5em;

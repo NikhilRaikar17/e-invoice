@@ -8,7 +8,7 @@
 }
 .login {
   min-height: 100%;
-  background-color: #373756;
+  background-color: hsl(288, 62%, 14%);
 }
 .modal-login {  
   color: #636363;
