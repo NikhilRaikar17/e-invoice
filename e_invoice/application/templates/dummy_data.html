@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item">{% block title %}{% endblock %}</li>
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <form action="{{url_for('invoice.dummy_data')}}" method="post">
+                        <div class="col-md-6">
+                                <div class="col-md-3">
+                                    <label for="customers">Customers</label>
+                                    <input type="number" id="customer_count" name="customer_count" class="form-control">
+                                </div>
+            
+                                <div class="col-md-3">
+                                    <label for="products">Products</label>
+                                    <input type="number" id="product_count" name="product_count" class="form-control">
+                                </div>
+            
+                                <div class="col-md-3 mt-3">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="col-md-3 mt-4">
+                                <button class="btn btn-danger" type="submit" name="delete_all" value="True">Delete All</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+
+{% endblock %}

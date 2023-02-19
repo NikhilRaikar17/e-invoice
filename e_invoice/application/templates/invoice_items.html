@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">{% block title %}Create New Item{% endblock %}</li>
+{% endblock %}
+
+{% block content %}
+  <h1>Manage Invoice Items</h1>
+  <hr/>
+
+  <button class="btn btn-sm" style="border: 1px solid hsl(198, 83%, 24%); font-size:15px;color:hsl(198, 83%, 24%);"data-toggle="modal" data-title="Add" data-target="#add-item" type="button"> 
+    <i class="fa-solid fa-cart-plus"></i> Products
+  </button>
+
+  <div class="table-responsive mt-2">
+    <table class="table table-striped table-responsive">
+      <thead style="background-color:hsl(198, 83%, 24%);" class="text-white">
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="vacation-table-body">
+      {% for product in products %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.name }}</td>
+          <td>
+            <i class="fa-solid fa-pen-to-square me-3 open_edit_product_dialog" 
+                id="edit_{{product.name}}"
+                data-toggle="modal" 
+                data-title="Update"
+                data-id="{{product.id}}" 
+                data-target="#edit_{{product.name}}"  
+                style="color:green;"></i>
+            <i class="fa-solid fa-trash" id="delete_{{product.name}}" style="color:red;"></i>
+          </td>
+        </tr>
+
+        <div class="modal fade " id="edit_{{product.name}}" tabindex="-1">
+          <div class="modal-dialog">
+            <form id="edit-product-form" action="{{url_for('invoice.edit_product')}}" method="POST">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Heading">Edit Invoice Item</h4>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <span>×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" id="update_product_id" name="update_product_id" >
+                  <div class="form-group">
+                    <label for="update_item_name"><b>Product Name</b></label>
+                    <input type="text" class="form-control" id="update_item_name" name="update_item_name" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: Screwdriver </small>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="">Currency</label>
+                      <select class="form-control" name="currency" id="currency">
+                          <option value="1">$</option>
+                          <option value="2">€</option>
+                      </select>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="item-price"><b>Price</b></label>
+                    <input type="text" 
+                      class="form-control" id="update_item_price" name="update_item_price" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: 49.99$ </small>
+                  </div>
+      
+                  
+      
+                </div>
+                <div class="modal-footer ">
+                  <button class="btn btn-success btn-lg" style="width: 100%;">
+                    <i class="fa fa-save"></i> Update
+                  </button>
+                </div>
+              </div>
+            </form>        
+          </div>
+        </div>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="modal fade" id="add-item" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="edit-vacation-form" action="{{url_for('invoice.add_product')}}" method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="Heading">Add Invoice Item</h4>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+              <label for="item-name"><b>Product Name</b></label>
+              <input type="text" class="form-control" id="item-name" name="item-name" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: Screwdriver </small>
+            </div>
+            
+            <div class="form-group">
+                <label for="">Currency</label>
+                <select class="form-control" name="currency" id="currency">
+                    <option value="1">$</option>
+                    <option value="2">€</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+              <label for="item-price"><b>Price</b></label>
+              <input type="text" class="form-control" id="item-price" name="item-price" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: 49.99$ </small>
+            </div>
+
+            
+
+          </div>
+          <div class="modal-footer ">
+            <button class="btn btn-success btn-lg" style="width: 100%;">
+              <i class="fa fa-save"></i> Add
+            </button>
+          </div>
+        </div>
+      </form>        
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).on("click", ".open_edit_product_dialog", function() {
+      var product_id = $(this).data('id')
+      $.ajax({
+            type: "GET",
+            url: "{{url_for('invoice.get_product_details')}}",
+            data: {"product_id":   product_id },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result){
+                if (!result["ERROR"]){
+                  $(".modal-body #update_item_name").val(result["name"]);
+                  $(".modal-body #update_item_price").val(result["price"]);
+                  $(".modal-body #update_product_id").val(product_id);
+                } else{
+                    console.log("wasuhjkashd");
+                }
+            }
+        });
+    });
+  </script>  
+{% endblock %}

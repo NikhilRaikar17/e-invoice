@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item">{% block title %}{% endblock %}</li>
+{% endblock %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div>
+                                        <h4 class="card-title">Summary</h4>
+                                        
+                                    </div>
+                                </div>
+            
+                                <div class="amp-pxl mt-4" style="height: 350px;">
+                                    <div class="chartist-tooltip"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body" style="height: 440px;overflow-y:scroll;">
+                                <h4 class="card-title">Last Generated Invoices</h4>
+                                <h6 class="card-subtitle">Average sales</h6>
+                                <div class="mt-5 pb-3 d-flex align-items-center">
+                                    <span class="btn btn-primary btn-circle d-flex align-items-center">
+                                        <i class="mdi mdi-cart-outline fs-4" ></i>
+                                    </span>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0 fw-bold">Invoice_1</h5>
+                                        <span class="text-muted fs-6">Customer_name</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span class="badge bg-light text-muted">+68%</span>
+                                    </div>
+                                </div>
+                                <div class="py-3 d-flex align-items-center">
+                                    <span class="btn btn-warning btn-circle d-flex align-items-center">
+                                        <i class="mdi mdi-star-circle fs-4" ></i>
+                                    </span>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0 fw-bold">Invoice_2</h5>
+                                        <span class="text-muted fs-6">Customer_name</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span class="badge bg-light text-muted">+68%</span>
+                                    </div>
+                                </div>
+                                <div class="py-3 d-flex align-items-center">
+                                    <span class="btn btn-success btn-circle d-flex align-items-center">
+                                        <i class="mdi mdi-comment-multiple-outline text-white fs-4" ></i>
+                                    </span>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0 fw-bold">Invoice_3</h5>
+                                        <span class="text-muted fs-6">Customer_name</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span class="badge bg-light text-muted">+68%</span>
+                                    </div>
+                                </div>
+                                <div class="py-3 d-flex align-items-center">
+                                    <span class="btn btn-info btn-circle d-flex align-items-center">
+                                        <i class="mdi mdi-diamond fs-4 text-white" ></i>
+                                    </span>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0 fw-bold">Invoice_4</h5>
+                                        <span class="text-muted fs-6">Customer_name</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span class="badge bg-light text-muted">+15%</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-3 d-flex align-items-center">
+                                    <span class="btn btn-danger btn-circle d-flex align-items-center">
+                                        <i class="mdi mdi-content-duplicate fs-4 text-white" ></i>
+                                    </span>
+                                    <div class="ms-3">
+                                        <h5 class="mb-0 fw-bold">Invoice_5</h5>
+                                        <span class="text-muted fs-6">Customer_name</span>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <span class="badge bg-light text-muted">+90%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <!-- column -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- title -->
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="card-title">Top customers</h4>
+                                        <h5 class="card-subtitle">Overview of Top customers</h5>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <div class="dl">
+                                            <select class="form-select shadow-none">
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- title -->
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-hover align-middle text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Customer</th>
+                                                <th class="border-top-0">Email</th>
+                                                <th class="border-top-0">Phone</th>
+                                                <th class="border-top-0">Invoices Generated</th>
+                                                <th class="border-top-0">Earnings</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="m-r-10">
+                                                            <a class="btn btn-circle btn-info text-white">NR</a>
+                                                        </div>
+                                                        <div class="">
+                                                            <h5 class="m-b-0">Nikhil Raikar</h5>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>nikhil@abc.com</td>
+                                                <td class="align-items-center">+49-78595966589</td>
+                                                <td>
+                                                    <label class=" align-items-center badge bg-danger">12</label>
+                                                </td>
+                                                <td>
+                                                    <h5 class="m-b-0">$2850.06</h5>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+        </div>
+       
+    </div>
+    {% endblock %}

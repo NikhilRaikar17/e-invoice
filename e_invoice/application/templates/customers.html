@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">{% block title %}Create New Customer{% endblock %}</li>
+{% endblock %}
+
+{% block content %}
+  <h1>Manage Customers</h1>
+  <hr/>
+
+  <button class="btn btn-sm" style="border: 1px solid #373756; font-size:15px;color:#373756;" data-toggle="modal" data-title="Add" data-target="#add-customer" type="button"> 
+    <i class="fa-solid fa-user-plus"></i> Customer
+  </button>
+
+  <div class="table-responsive mt-2">
+    <table class="table table-striped table-responsive">
+      <thead style="background-color:#373756;" class="text-white">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="vacation-table-body">
+      {% for customer in customers %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{customer.phone_number}} </td>
+          <td>
+            <i class="open_edit_customer_dialog fa-solid fa-pen-to-square me-3" data-toggle="modal" data-title="Add"
+                id="edit_{{customer.name}}" style="color:green;" data-id="{{customer.id}}" data-target="#edit_{{customer.name}}" type="button"></i>
+            <i class="fa-solid fa-trash" id="delete_{{customer.name}}" style="color:red;"></i>
+          </td>
+        </tr>
+
+        <div class="modal fade" id="edit_{{customer.name}}" tabindex="-1">
+          <div class="modal-dialog">
+            <form id="edit-vacation-form" action="{{url_for('invoice.edit_customer')}}" method="POST">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="Heading">Edit customer</h4>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <span>×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" id="edited_customer_id" name="edited_customer_id">
+                  <div class="form-group">
+                    <label for="customer-name"><b>Name</b></label>
+                    <input type="text" class="form-control" id="edited_customer_name" name="edited_customer_name" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: Aleem Khan</small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-email"><b>Email</b></label>
+                    <input class="form-control" id="edited_customer_email" name="edited_customer_email" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: aleemkhan@gmail.com</small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-address"><b>Address</b></label>
+                    <textarea class="form-control" id="edited_customer_address" name="edited_customer_address" value="" required></textarea>
+                    <small id="emailHelp" class="form-text text-muted">Example: 76185,KA Germany </small>
+                  </div>
+      
+                  <div class="form-group">
+                    <label for="customer-phone"><b>Phone Number</b></label>
+                    <input class="form-control" id="edited_customer_phone" name="edited_customer_phone" value="" required></input>
+                    <small id="emailHelp" class="form-text text-muted">Example: +49-17656525546</small>
+                  </div>
+                  
+                </div>
+      
+                <div class="modal-footer ">
+                  <button class="btn btn-success btn-lg" style="width: 100%;">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </form>        
+          </div>
+        </div>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="modal fade" id="add-customer" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="edit-vacation-form" action="{{url_for('invoice.add_customer')}}" method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="Heading">Add customer</h4>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+              <label for="customer-name"><b>Name</b></label>
+              <input type="text" class="form-control" id="customer-name" name="customer-name" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: Aleem Khan</small>
+            </div>
+
+            <div class="form-group">
+              <label for="customer-email"><b>Email</b></label>
+              <input class="form-control" id="customer-email" name="customer-email" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: aleemkhan@gmail.com</small>
+            </div>
+
+            <div class="form-group">
+              <label for="customer-address"><b>Address</b></label>
+              <textarea class="form-control" id="customer-address" name="customer-address" value="" required></textarea>
+              <small id="emailHelp" class="form-text text-muted">Example: 76185,KA Germany </small>
+            </div>
+
+            <div class="form-group">
+              <label for="customer-phone"><b>Phone Number</b></label>
+              <input class="form-control" id="customer-phone" name="customer-phone" value="" required></input>
+              <small id="emailHelp" class="form-text text-muted">Example: +49-17656525546</small>
+            </div>
+            
+          </div>
+
+          <div class="modal-footer ">
+            <button class="btn btn-success btn-lg" style="width: 100%;">
+              <i class="fa fa-add"></i> Add
+            </button>
+          </div>
+        </div>
+      </form>        
+    </div>
+  </div>
+  
+  
+
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).on("click", ".open_edit_customer_dialog", function() {
+      var customer_id = $(this).data('id')
+      $.ajax({
+            type: "GET",
+            url: "{{url_for('invoice.get_customer_details')}}",
+            data: {"customer_id":   customer_id },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result){
+                if (!result["ERROR"]){
+                  $(".modal-body #edited_customer_name").val(result["name"]);
+                  $(".modal-body #edited_customer_email").val(result["email"]);
+                  $(".modal-body #edited_customer_address").val(result["address"]);
+                  $(".modal-body #edited_customer_phone").val(result["phone_number"]);
+                  $(".modal-body #edited_customer_id").val(customer_id);
+                } else{
+                    console.log("wasuhjkashd");
+                }
+            }
+        });
+    });
+    
+  </script>  
+{% endblock %}
