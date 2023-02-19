@@ -31,8 +31,8 @@
       </a>
     </li>
     
-    <li class="nav-item {% if 'manage_invoice_items' in request.url %} border-5 rounded-4 active {% endif %}"
-    {% if 'manage_invoice_items' in request.url %} style="background-color:rgb(241, 241, 241);width: 60%;" {% endif %}
+    <li class="nav-item {% if 'manage_invoice_items' in request.url %} border-5 rounded-4  active {% endif %}"
+    {% if 'manage_invoice_items' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}
     >
       <a class="nav-link" href="{{ url_for('invoice.manage_invoice_items') }}">
         <i class="fa-solid fa-hand-holding-dollar"></i>
@@ -40,14 +40,14 @@
       </a>
     </li>
     <li class="nav-item {% if 'settings' in request.url %} border-5 rounded-4 active {% endif %}"
-    {% if 'product_groups' in request.url %} style="background-color:rgb(241, 241, 241);width: 60%;" {% endif %}>
+    {% if 'product_groups' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="#">
         <i class="fa-solid fa-sitemap"></i>
         <span>Groups</span>
       </a>
     </li>
     <li class="nav-item {% if 'settings' in request.url %} border-5 rounded-4 active {% endif %}"
-    {% if 'settings' in request.url %} style="background-color:rgb(241, 241, 241);width: 60%;" {% endif %}>
+    {% if 'settings' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="#">
         <i class="fa-solid fa-sliders"></i>
         <span>Settings</span>
@@ -55,7 +55,7 @@
     </li>
     
     <li class="nav-item {% if 'dummy_data' in request.url %} border-5 rounded-4 active {% endif %}"
-    {% if 'dummy_data' in request.url %} style="background-color:rgb(241, 241, 241);width: 60%;" {% endif %}>
+    {% if 'dummy_data' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="{{ url_for('invoice.dummy_data') }}">
         <i class="fa-solid fa-sliders"></i>
         <span>dummy_data</span>

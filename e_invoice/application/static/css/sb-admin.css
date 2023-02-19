@@ -181,8 +181,6 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
   color: rgba(105, 95, 95, 0.75);
-  border-radius: 20px;
-  border: 1px solid rgba(241, 241, 241)
 }
 
 .sidebar.toggled {
