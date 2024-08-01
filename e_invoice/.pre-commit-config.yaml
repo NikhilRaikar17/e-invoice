@@ -1,3 +1,14 @@
+exclude: |
+  (?x)^(
+    .*\.xml$|                  # Exclude all XML files
+    venv/.*|                   # Exclude everything in the venv directory
+    .*\.pyc$|                  # Exclude all Python compiled files
+    \.idea/.*|                 # Exclude everything in the .idea directory
+    \.vscode/.*|               # Exclude everything in the .vscode directory
+    __pycache__/.*             # Exclude everything in the __pycache__ directory
+    application/static/.*      # Exclude everything in the application/static directory
+  )$
+
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0

@@ -64,14 +64,14 @@
                     {% endfor %}
                   {% endif %}
                 {% endwith %}
-      
+
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">
                     <a href="{{ url_for('invoice.index') }}">Dashboard</a>
                   </li>
                   {% block breadcrumb %}{% endblock %}
-                </ol> 
+                </ol>
                 <!-- Page Content -->
                 {% block content %}{% endblock %}
               </div>
@@ -92,7 +92,7 @@
       <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
       </a>
-  
+
        <!-- Modal logout dialog -->
       <div class="modal fade" id="logoutModal" tabindex="-1">
         <div class="modal-dialog">

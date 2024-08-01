@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from application import db
 
 
 class Users(db.Model):
-    __tablename__ = "users"
+    __tablename__ = 'users'
     # primary keys are required by SQLAlchemy
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
@@ -46,14 +48,23 @@ class Invoice(db.Model):
     # primary keys are required by SQLAlchemy
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    customer_id = db.Column(db.Integer, db.ForeignKey(
-        "customers.id"), nullable=False)
+    customer_id = db.Column(
+        db.Integer, db.ForeignKey(
+            'customers.id',
+        ), nullable=False,
+    )
 
 
 class InvoiceMaps(db.Model):
     __tablename__ = 'invoicemaps'
     id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey(
-        "customers.id"), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey(
-        "products.id"), nullable=False)
+    customer_id = db.Column(
+        db.Integer, db.ForeignKey(
+            'customers.id',
+        ), nullable=False,
+    )
+    product_id = db.Column(
+        db.Integer, db.ForeignKey(
+            'products.id',
+        ), nullable=False,
+    )

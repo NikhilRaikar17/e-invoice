@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
+class Config:
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
@@ -13,7 +15,7 @@ class Config(object):
 class ProductionConfig(Config):
     DEBUG = False
     SECRET_KEY = '@o9p^R_NVK1Hkd85KnANU6yA_>Np:G}TXc_'
-    SQLALCHEMY_DATABASE_URI = "postgresql://tglvtldbsdzhmm:2905a819edc34c7573670ec5ee500307311d6ee58da98be79731d2c049faa27b@ec2-54-159-175-38.compute-1.amazonaws.com:5432/d782ee528lko56"
+    SQLALCHEMY_DATABASE_URI = 'postgresql://tglvtldbsdzhmm:2905a819edc34c7573670ec5ee500307311d6ee58da98be79731d2c049faa27b@ec2-54-159-175-38.compute-1.amazonaws.com:5432/d782ee528lko56'
 
 
 class StagingConfig(Config):

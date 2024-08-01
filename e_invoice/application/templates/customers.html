@@ -8,7 +8,7 @@
   <h1>Manage Customers</h1>
   <hr/>
 
-  <button class="btn btn-sm" style="border: 1px solid #373756; font-size:15px;color:#373756;" data-toggle="modal" data-title="Add" data-target="#add-customer" type="button"> 
+  <button class="btn btn-sm" style="border: 1px solid #373756; font-size:15px;color:#373756;" data-toggle="modal" data-title="Add" data-target="#add-customer" type="button">
     <i class="fa-solid fa-user-plus"></i> Customer
   </button>
 
@@ -54,34 +54,34 @@
                     <input type="text" class="form-control" id="edited_customer_name" name="edited_customer_name" value="" required></input>
                     <small id="emailHelp" class="form-text text-muted">Example: Aleem Khan</small>
                   </div>
-      
+
                   <div class="form-group">
                     <label for="customer-email"><b>Email</b></label>
                     <input class="form-control" id="edited_customer_email" name="edited_customer_email" value="" required></input>
                     <small id="emailHelp" class="form-text text-muted">Example: aleemkhan@gmail.com</small>
                   </div>
-      
+
                   <div class="form-group">
                     <label for="customer-address"><b>Address</b></label>
                     <textarea class="form-control" id="edited_customer_address" name="edited_customer_address" value="" required></textarea>
                     <small id="emailHelp" class="form-text text-muted">Example: 76185,KA Germany </small>
                   </div>
-      
+
                   <div class="form-group">
                     <label for="customer-phone"><b>Phone Number</b></label>
                     <input class="form-control" id="edited_customer_phone" name="edited_customer_phone" value="" required></input>
                     <small id="emailHelp" class="form-text text-muted">Example: +49-17656525546</small>
                   </div>
-                  
+
                 </div>
-      
+
                 <div class="modal-footer ">
                   <button class="btn btn-success btn-lg" style="width: 100%;">
                     Update
                   </button>
                 </div>
               </div>
-            </form>        
+            </form>
           </div>
         </div>
       {% endfor %}
@@ -101,7 +101,7 @@
             </button>
           </div>
           <div class="modal-body">
-            
+
             <div class="form-group">
               <label for="customer-name"><b>Name</b></label>
               <input type="text" class="form-control" id="customer-name" name="customer-name" value="" required></input>
@@ -125,7 +125,7 @@
               <input class="form-control" id="customer-phone" name="customer-phone" value="" required></input>
               <small id="emailHelp" class="form-text text-muted">Example: +49-17656525546</small>
             </div>
-            
+
           </div>
 
           <div class="modal-footer ">
@@ -134,11 +134,11 @@
             </button>
           </div>
         </div>
-      </form>        
+      </form>
     </div>
   </div>
-  
-  
+
+
 
 
 {% endblock %}
@@ -166,6 +166,6 @@
             }
         });
     });
-    
-  </script>  
+
+  </script>
 {% endblock %}

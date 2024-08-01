@@ -1,6 +1,9 @@
-from flask_script import Manager
+from __future__ import annotations
+
+from application import create_app
+from application import db
 from flask_migrate import Migrate
-from application import create_app, db
+from flask_script import Manager
 
 
 app = create_app()

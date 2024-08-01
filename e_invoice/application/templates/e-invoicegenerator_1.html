@@ -9,22 +9,22 @@
   <hr/>
 
   <div class="row">
-    
+
     <div class="col-md-2">
       <button class="btn btn-info" data-toggle="modal" data-title="Add" data-target="#select-customer"> Select Customer </button>
     </div>
-    
+
     <div class="col-md-2 ml-0">
       <button class="btn btn-danger" id="clear_customer_data" name="clear_customer_data" style="display:none" onclick="clear_customer_details()"> Clear Customer </button>
     </div>
   </div>
-  
+
   <div class="container-fluid">
 
     <div class="row justify-content-between">
 
       <div class="col-md-3 mt-3 mb-5 " style="width:300px;">
-        
+
           <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
             <input type="text" class="form-control cust_name" id="customers-name" disabled>
@@ -35,7 +35,7 @@
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="email" disabled>
             <small id="emailHelp" class="form-text text-muted">example@test.com</small>
-    
+
           </div>
 
           <div class="form-group">
@@ -64,17 +64,17 @@
           <label for="exampleInputEmail1">Your Address</label>
           <textarea type="text" id="your_address" class="form-control" disabled> </textarea>
         </div>
-        
+
         <div class="form-group">
           <label for="exampleInputEmail1">Date</label>
           <input class="form-control" type="date" id="start-date" name="start-date"  required></input>
         </div>
-        
+
         <div class="form-group">
           <label for="exampleInputEmail1">Due Date</label>
           <input class="form-control" type="date" id="due-date" name="due-date"  required></input>
         </div>
-        
+
         <div class="form-check form-switch pt-4">
           <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
           <label class="form-check-label" for="flexSwitchCheckDefault">Send invoice as Email</label>
@@ -98,14 +98,14 @@
     <div class="col-md-8" id="price_total" style="display: none">
       <span style="float: right;" id="price_total_span"></span>
     </div>
-    
+
     <div class="d-grid gap-2 d-md-block"">
         <button class="btn btn-success" id="add_products" data-toggle="modal" data-title="Add" data-target="#add_products_invoice" disabled> Add Products </button>
     </div>
 
     <div class="modal fade" id="select-customer" tabindex="-1">
       <div class="modal-dialog">
-        
+
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="Heading">Generate Invoice</h4>
@@ -131,15 +131,15 @@
                 Select
               </button>
             </div>
-            
-          </div>       
+
+          </div>
       </div>
     </div>
-  
-  
+
+
     <div class="modal fade" id="add_products_invoice" tabindex="-1">
       <div class="modal-dialog">
-        
+
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="Heading">All Products</h4>
@@ -164,8 +164,8 @@
                 Select
               </button>
             </div>
-            
-          </div>       
+
+          </div>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@
         table_body.innerHTML = "";
         price_total.style.display = 'none';
         price_total_span.innerHTML = ""
-    
+
       }
 
       function update_table_with_products(){
@@ -258,7 +258,7 @@
             selected.push([option.text,option.getAttribute("product_price")]);
           }
         }
-        table_body.innerHTML = ""; 
+        table_body.innerHTML = "";
         var total = 0
         for (j = 0; j < selected.length; j++) {
           var tbodyTr = document.createElement('tr');
@@ -276,5 +276,5 @@
       }
 
 
-  </script>  
+  </script>
 {% endblock %}
