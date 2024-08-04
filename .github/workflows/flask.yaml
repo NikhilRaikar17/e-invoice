@@ -23,7 +23,7 @@ jobs:
 
     - name: Run Flask app
       run: |
-        nohup python manage.py > server.log 2>&1 &
+        nohup python run.py > server.log 2>&1 &
         echo $! > flask_server.pid
 
     - name: Test /login route
