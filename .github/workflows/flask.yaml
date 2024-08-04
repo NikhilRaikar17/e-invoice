@@ -25,12 +25,12 @@ jobs:
     - name: Run Flask app
       working-directory: e_invoice
       run: |
-        nohup flask run & # Start Flask application in the background
+        python manage.py
 
     - name: Test /login route
       run: |
         sleep 10 # Wait for the server to start
-        curl -s --head http://127.0.0.1:5000/login | head -n 10 # Check if /login returns HTML
+        curl -s --head http://127.0.0.1:5000/login | head -n 10
 
     - name: Stop Flask app
       run: |
