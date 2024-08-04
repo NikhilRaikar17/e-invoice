@@ -15,6 +15,9 @@ jobs:
       with:
         python-version: '3.8'
 
+    - name: List directories
+      run: ls -R
+
     - name: Install dependencies
       working-directory: e-invoice/e_invoice
       run: |
