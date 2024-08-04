@@ -8,7 +8,7 @@
   <h1>Manage Invoice Items</h1>
   <hr/>
 
-  <button class="btn btn-sm" style="border: 1px solid hsl(198, 83%, 24%); font-size:15px;color:hsl(198, 83%, 24%);"data-toggle="modal" data-title="Add" data-target="#add-item" type="button"> 
+  <button class="btn btn-sm" style="border: 1px solid hsl(198, 83%, 24%); font-size:15px;color:hsl(198, 83%, 24%);"data-toggle="modal" data-title="Add" data-target="#add-item" type="button">
     <i class="fa-solid fa-cart-plus"></i> Products
   </button>
 
@@ -29,12 +29,12 @@
           <td>{{ product.price }}</td>
           <td>{{ product.name }}</td>
           <td>
-            <i class="fa-solid fa-pen-to-square me-3 open_edit_product_dialog" 
+            <i class="fa-solid fa-pen-to-square me-3 open_edit_product_dialog"
                 id="edit_{{product.name}}"
-                data-toggle="modal" 
+                data-toggle="modal"
                 data-title="Update"
-                data-id="{{product.id}}" 
-                data-target="#edit_{{product.name}}"  
+                data-id="{{product.id}}"
+                data-target="#edit_{{product.name}}"
                 style="color:green;"></i>
             <i class="fa-solid fa-trash" id="delete_{{product.name}}" style="color:red;"></i>
           </td>
@@ -57,7 +57,7 @@
                     <input type="text" class="form-control" id="update_item_name" name="update_item_name" value="" required></input>
                     <small id="emailHelp" class="form-text text-muted">Example: Screwdriver </small>
                   </div>
-                  
+
                   <div class="form-group">
                       <label for="">Currency</label>
                       <select class="form-control" name="currency" id="currency">
@@ -65,16 +65,16 @@
                           <option value="2">€</option>
                       </select>
                   </div>
-      
+
                   <div class="form-group">
                     <label for="item-price"><b>Price</b></label>
-                    <input type="text" 
+                    <input type="text"
                       class="form-control" id="update_item_price" name="update_item_price" value="" required></input>
                     <small id="emailHelp" class="form-text text-muted">Example: 49.99$ </small>
                   </div>
-      
-                  
-      
+
+
+
                 </div>
                 <div class="modal-footer ">
                   <button class="btn btn-success btn-lg" style="width: 100%;">
@@ -82,7 +82,7 @@
                   </button>
                 </div>
               </div>
-            </form>        
+            </form>
           </div>
         </div>
       {% endfor %}
@@ -102,13 +102,13 @@
             </button>
           </div>
           <div class="modal-body">
-            
+
             <div class="form-group">
               <label for="item-name"><b>Product Name</b></label>
               <input type="text" class="form-control" id="item-name" name="item-name" value="" required></input>
               <small id="emailHelp" class="form-text text-muted">Example: Screwdriver </small>
             </div>
-            
+
             <div class="form-group">
                 <label for="">Currency</label>
                 <select class="form-control" name="currency" id="currency">
@@ -123,7 +123,7 @@
               <small id="emailHelp" class="form-text text-muted">Example: 49.99$ </small>
             </div>
 
-            
+
 
           </div>
           <div class="modal-footer ">
@@ -132,7 +132,7 @@
             </button>
           </div>
         </div>
-      </form>        
+      </form>
     </div>
   </div>
 
@@ -160,5 +160,5 @@
             }
         });
     });
-  </script>  
+  </script>
 {% endblock %}

@@ -1,13 +1,26 @@
-from os import path
-from flask import flash, redirect, render_template, request, url_for, send_from_directory, Blueprint
-from flask_login import LoginManager, login_user, logout_user, login_required
-from application.models.db_models import *
+from __future__ import annotations
+
 import datetime
-from application import db, login_manager
+from os import path
+
+from application import db
+from application import login_manager
+from application.models.db_models import Customers
+from application.models.db_models import Products
+from application.models.db_models import Users
+from flask import Blueprint
+from flask import flash
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import send_from_directory
+from flask import url_for
+from flask_login import login_required
+from flask_login import login_user
+from flask_login import logout_user
 
 
 invoice = Blueprint('invoice', __name__)
-current_users = {}
 
 
 @login_manager.user_loader
@@ -23,13 +36,21 @@ def index():
 
 @invoice.route('/favicon.ico')
 def favicon():
-    return send_from_directory(path.join(invoice.root_path, 'static'), 'images/apl.png', mimetype='image/x-icon')
+    return send_from_directory(
+        path.join(
+            invoice.root_path,
+            'static',
+        ),
+        'images/apl.png',
+        mimetype='image/x-icon',
+    )
 
 
 @invoice.route('/login', methods=['GET', 'POST'])
 def login():
     email = request.form.get('username')
     password = request.form.get('password')
+    print(password)
     user = Users.query.filter_by(email=email).first()
     if request.method == 'POST':
         if user:
@@ -54,14 +75,19 @@ def generate_invoice():
     customers = Customers.query.all()
     products = Products.query.all()
     date_time = datetime.datetime.today().strftime('%d-%m-%Y')
-    return render_template("invoice_generator.html", customers=customers, products=products, date_time=date_time)
+    return render_template(
+        'invoice_generator.html',
+        customers=customers,
+        products=products,
+        date_time=date_time,
+    )
 
 
 @invoice.route('/manage_customers', methods=['GET'])
 @login_required
 def manage_customers():
     customers = Customers.query.all()
-    return render_template("customers.html", customers=customers)
+    return render_template('customers.html', customers=customers)
 
 
 @invoice.route('/add_customer', methods=['POST'])
@@ -71,17 +97,19 @@ def add_customer():
     address = request.form.get('customer-address')
     email = request.form.get('customer-email')
     phone_number = request.form.get('customer-phone')
-    new_customer = Customers(name=name, address=address,
-                             email=email, phone_number=phone_number)
+    new_customer = Customers(
+        name=name, address=address,
+        email=email, phone_number=phone_number,
+    )
     try:
         db.session.add(new_customer)
         db.session.commit()
-        flash("New customer successfully added", 'success')
+        flash('New customer successfully added', 'success')
     except Exception as e:
         print(e)
         db.session.rollback()
         db.session.flush()
-        flash("Some customer details entered are not proper", 'danger')
+        flash('Some customer details entered are not proper', 'danger')
     return redirect(url_for('manage_customers'))
 
 
@@ -89,7 +117,7 @@ def add_customer():
 @login_required
 def manage_invoice_items():
     products = Products.query.all()
-    return render_template("invoice_items.html", products=products)
+    return render_template('add_products_for_invoice.html', products=products)
 
 
 @invoice.route('/add_product', methods=['POST'])
@@ -101,12 +129,12 @@ def add_product():
     try:
         db.session.add(new_product)
         db.session.commit()
-        flash("New item successfully added", 'success')
+        flash('New item successfully added', 'success')
     except Exception as e:
         print(e)
         db.session.rollback()
         db.session.flush()
-        flash("Item could not be added", 'danger')
+        flash('Item could not be added', 'danger')
     return redirect(url_for('manage_invoice_items'))
 
 
@@ -116,13 +144,13 @@ def get_customer_details():
     customer_id = request.args.get('customer_id')
     customer = Customers.query.filter_by(id=int(customer_id)).first()
     if not customer:
-        return {"ERROR": "FAILED"}
+        return {'ERROR': 'FAILED'}
 
     return {
-        "name": customer.name,
-        "email": customer.email,
-        "address": customer.address,
-        "phone_number": customer.phone_number
+        'name': customer.name,
+        'email': customer.email,
+        'address': customer.address,
+        'phone_number': customer.phone_number,
     }
 
 
@@ -151,14 +179,15 @@ def edit_customer():
                 valid_customer.phone_number = phone_number
 
             db.session.commit()
-            flash("Successfully updated the customer details", 'success')
+            flash('Successfully updated the customer details', 'success')
             return redirect(url_for('.manage_customers'))
         else:
-            raise Exception("Invalid customer details")
+            raise Exception('Invalid customer details')
     except Exception as e:
+        print(e)
         db.session.rollback()
         db.session.flush()
-        flash("Customer could not be updated, please check the form", 'danger')
+        flash('Customer could not be updated, please check the form', 'danger')
         return redirect(url_for('.manage_customers'))
 
 
@@ -176,11 +205,11 @@ def get_product_details():
     product_id = request.args.get('product_id')
     product = Products.query.filter_by(id=int(product_id)).first()
     if not product:
-        return {"ERROR": "FAILED"}
+        return {'ERROR': 'FAILED'}
 
     return {
-        "name": product.name,
-        "price": product.price
+        'name': product.name,
+        'price': product.price,
     }
 
 
@@ -201,16 +230,17 @@ def edit_product():
                 valid_product.price = price
 
             db.session.commit()
-            flash("Successfully updated the product", 'success')
+            flash('Successfully updated the product', 'success')
             return redirect(url_for('.manage_invoice_items'))
 
         else:
-            raise Exception("Invalid product")
+            raise Exception('Invalid product')
 
     except Exception as e:
+        print(e)
         db.session.rollback()
         db.session.flush()
-        flash("Product could not be updated, please check the form", 'danger')
+        flash('Product could not be updated, please check the form', 'danger')
         return redirect(url_for('.manage_invoice_items'))
 
 
@@ -224,17 +254,24 @@ def dashboard():
 @login_required
 def dummy_data():
     if request.method == 'POST':
-        delete_all = request.form['delete_all'] if 'delete_all' in request.form else None
+        if 'delete_all' in request.form:
+            delete_all = request.form['delete_all']
+        else:
+            delete_all = None
+
         if delete_all:
             try:
                 Customers.query.delete()
                 Products.query.delete()
                 db.session.commit()
-                flash("Deleted all data of customers and products!", 'success')
-            except:
+                flash('Deleted all data of customers and products!', 'success')
+            except Exception:
                 db.session.rollback()
                 db.session.flush()
-                flash("Could not delete data of customers and products!", 'danger')
+                flash(
+                    'Could not delete data of customers and products!',
+                    'danger',
+                )
             return render_template('dummy_data.html')
 
         customer_count = int(request.form['customer_count'])
@@ -242,19 +279,25 @@ def dummy_data():
         try:
             if customer_count:
                 for count in range(0, customer_count):
-                    new_customer = Customers(name=f'customer_{count}', email=f"customer_{count}@gmail.com",
-                                             address="76890,KA Germany", phone_number='908728738767')
+                    new_customer = Customers(
+                        name=f'customer_{count}',
+                        email=f'customer_{count}@gmail.com',
+                        address='76890,KA Germany',
+                        phone_number='908728738767',
+                    )
                     db.session.add(new_customer)
                 db.session.commit()
 
             if product_count:
                 for count in range(0, product_count):
                     new_products = Products(
-                        name=f'product_{count}', price=count+180)
+                        name=f'product_{count}', price=count+180,
+                    )
                     db.session.add(new_products)
                 db.session.commit()
 
         except Exception as e:
+            print(e)
             db.session.rollback()
             db.session.flush()
 

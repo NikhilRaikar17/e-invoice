@@ -1,12 +1,12 @@
-<ul class="sidebar navbar-nav">
+<ul class="sidebar navbar-nav rounded-1">
   <li class="nav-item  {% if 'dashboard' in request.url %} border-5 rounded-4 active {% endif %}"
   {% if 'dashboard' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="{{ url_for('invoice.dashboard') }}">
         <i class="fa-solid fa-house"></i>
         <span>Dashboard</span>
       </a>
-      
-      
+
+
     </li>
     <!-- <li class="nav-item">
       <a class="nav-link" href="{{ url_for('invoice.generate_invoice') }}">
@@ -21,16 +21,16 @@
         <span>Generate E-Invoice</span>
       </a>
     </li>
-    
-    
-    <li class="nav-item {% if 'manage_customers' in request.url %} border-5 rounded-4 active {% endif %}" 
+
+
+    <li class="nav-item {% if 'manage_customers' in request.url %} border-5 rounded-4 active {% endif %}"
         {% if 'manage_customers' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="{{ url_for('invoice.manage_customers') }}">
         <i class="fa-solid fa-users"></i>
         <span>Customers</span>
       </a>
     </li>
-    
+
     <li class="nav-item {% if 'manage_invoice_items' in request.url %} border-5 rounded-4  active {% endif %}"
     {% if 'manage_invoice_items' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}
     >
@@ -53,7 +53,7 @@
         <span>Settings</span>
       </a>
     </li>
-    
+
     <li class="nav-item {% if 'dummy_data' in request.url %} border-5 rounded-4 active {% endif %}"
     {% if 'dummy_data' in request.url %} style="background-color:rgb(241, 241, 241);width: 100%;" {% endif %}>
       <a class="nav-link" href="{{ url_for('invoice.dummy_data') }}">
@@ -61,5 +61,5 @@
         <span>dummy_data</span>
       </a>
     </li>
-    
+
   </ul>

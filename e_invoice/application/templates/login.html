@@ -1,70 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Login</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link
+      href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
 
     <!-- Custom fonts -->
-    <link href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+      href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Custom styles -->
-    <link href="{{ url_for('static',filename='css/login.css') }}" rel="stylesheet">
-
+    <link
+      href="{{ url_for('static',filename='css/login.css') }}"
+      rel="stylesheet"
+    />
   </head>
+  <style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #373756;
 
-  <body class="login">
-  
-    <div class="modal-dialog modal-login">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="avatar">
-            <img src="{{ url_for('static',filename='images/apl.png') }}" alt="Avatar">
-          </div>				
-          <h4 class="modal-title">InGen</h4>	
-        </div>
-        <div class="modal-body">
-          <form action="{{ url_for('invoice.login') }}" method="post">
-       
-            <div class="form-group">
-              <input type="text" class="form-control" name="username" placeholder="Username" required="required">		
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" name="password" placeholder="Password" required="required">	
-            </div>        
-            <div class="form-group">
-              <button id="submit" type="submit" class="btn btn-primary btn-lg btn-block login-btn">
-                <i class="fa fa-sign-in-alt"></i> Login
-              </button>
-            </div>
-          </form>
-        </div>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="modal-footer">
-              <div class="container">
-              {% for message in messages %}
-                <div class="row">
-                  <div class="col">
-                    <b>{{ message }}</b>
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-linear-gradient(
+        to right,
+        rgb(230, 218, 218),
+        #373756
+      );
+
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: linear-gradient(to right, rgb(230, 218, 218), #373756);
+    }
+
+    @media (min-width: 768px) {
+      .gradient-form {
+        height: 100vh !important;
+      }
+    }
+    @media (min-width: 769px) {
+      .gradient-custom-2 {
+        border-top-right-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+      }
+    }
+  </style>
+
+  <body>
+    <section class="h-100 gradient-form">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-xl-10">
+            <div class="card rounded-3 text-black">
+              <div class="row g-0">
+                <div class="col-lg-6">
+                  <div class="card-body p-md-5 mx-md-4">
+                    <div class="text-center">
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                        style="width: 185px"
+                        alt="logo"
+                      />
+                      <h4 class="mt-1 mb-5 pb-1">Invoice Generator</h4>
+                    </div>
+
+                    <form action="{{ url_for('invoice.login') }}" method="post">
+                      <div class="form-outline mb-4">
+                        <input
+                          type="text"
+                          name="username"
+                          id="form2Example11"
+                          class="form-control"
+                          placeholder="Username"
+                        />
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <input
+                          type="password"
+                          name="password"
+                          id="form2Example22"
+                          class="form-control"
+                          placeholder="Password"
+                        />
+                      </div>
+
+                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button
+                          id="submit"
+                          type="submit"
+                          class="btn btn-primary btn-lg btn-block login-btn"
+                        >
+                          <i class="fa fa-sign-in-alt"></i> Login
+                        </button>
+                        <a class="text-muted" href="#!">Forgot password?</a>
+                      </div>
+
+                      <!-- <div class="d-flex align-items-center justify-content-center pb-4">
+                        <p class="mb-0 me-2">Don't have an account?</p>
+                        <button type="button" class="btn btn-outline-danger">Create new</button>
+                      </div> -->
+                    </form>
+                  </div>
+                  {% with messages = get_flashed_messages() %} {% if messages %}
+                  <div class="modal-footer">
+                    <div class="container">
+                      {% for message in messages %}
+                      <div class="row">
+                        <div class="col">
+                          <b>{{ message }}</b>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endif %} {% endwith %}
+                </div>
+
+                <div
+                  class="col-lg-6 d-flex align-items-center gradient-custom-2"
+                >
+                  <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                    <h4 class="mb-4">We are more than just a company</h4>
+                    <p class="small mb-0">
+                      Login and create youre own invoices
+                    </p>
                   </div>
                 </div>
-              {% endfor %}
               </div>
             </div>
-          {% endif %}
-        {% endwith %}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
     <!-- Bootstrap core JavaScript -->
     <script src="{{ url_for('static',filename='vendor/jquery/jquery.min.js') }}"></script>
@@ -72,7 +154,5 @@
 
     <!-- Core plugin JavaScript -->
     <script src="{{ url_for('static',filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
   </body>
-
 </html>
