@@ -25,7 +25,8 @@ jobs:
     - name: Run Flask app
       working-directory: e_invoice
       run: |
-        nohup python manage.py &
+        nohup python manage.py > server.log 2>&1 &
+        echo $! > flask_server.pid
 
     - name: Test /login route
       run: |
@@ -34,4 +35,4 @@ jobs:
 
     - name: Stop Flask app
       run: |
-        pkill -f 'flask run' # Stop the Flask app
+        kill $(cat flask_server.pid)
