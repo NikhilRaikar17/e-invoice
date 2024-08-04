@@ -1,0 +1,7 @@
+*.xml
+/venv
+*.mypy_cache
+*.pyc
+.idea
+/.vscode
+__pycache__
