@@ -1,5 +1,6 @@
 *.xml
-/venv
+*venv
+*.venv
 *.mypy_cache
 *.pyc
 .idea
