@@ -21,7 +21,6 @@ from flask_login import logout_user
 
 
 invoice = Blueprint('invoice', __name__)
-current_users = {}
 
 
 @login_manager.user_loader
@@ -118,7 +117,7 @@ def add_customer():
 @login_required
 def manage_invoice_items():
     products = Products.query.all()
-    return render_template('invoice_items.html', products=products)
+    return render_template('add_products_for_invoice.html', products=products)
 
 
 @invoice.route('/add_product', methods=['POST'])
