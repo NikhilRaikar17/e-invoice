@@ -25,7 +25,7 @@ jobs:
     - name: Run Flask app
       working-directory: e_invoice
       run: |
-        python manage.py
+        nohup python manage.py
 
     - name: Test /login route
       run: |
