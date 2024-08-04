@@ -36,3 +36,4 @@ jobs:
     - name: Stop Flask app
       run: |
         kill $(cat flask_server.pid)
+      continue-on-error: true
